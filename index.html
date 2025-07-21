@@ -3,32 +3,164 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>种子深科社区 APP 下载</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Seeds Talk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    img { pointer-events: none; }
     :root {
       --green: #00b88d;
+      --green-light: #00e6b8;
       --green-dark: #00906f;
       --blue-dark: #0a0f2c;
+      --blue-light: #142c8c;
+      --purple: #7a4fff;
+      --teal: #00d3d4;
+      --cyan: #00c6ff;
+      --pink: #ff4d9a;
       --gray-bg: #f4f6fa;
       --font-main: 'Inter', 'Helvetica Neue', sans-serif;
+      --glow: 0 0 15px rgba(0, 184, 141, 0.6);
+      --glow-hover: 0 0 25px rgba(0, 184, 141, 0.8);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --neon-glow: 0 0 5px rgba(0, 230, 184, 0.5), 0 0 10px rgba(0, 230, 184, 0.3);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: var(--font-main);
-      background: #fff;
+      background: linear-gradient(135deg, #f8fdff 0%, #f0f9ff 100%);
       color: #1c1c1c;
-      line-height: 1.6;
+      line-height: 1.8;
+      overflow-x: hidden;
+      padding-top: 80px;
     }
+    body[lang="zh-CN"] {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    body.no-scroll {
+      overflow: hidden;
+    }
+    body[lang="en"] .zh-content { display: none; }
+    body[lang="zh-CN"] .en-content { display: none; }
+    img { pointer-events: none; }
+    
+    /* 导航栏 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(10, 15, 44, 0.95), rgba(0, 184, 141, 0.2));
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2), 0 0 10px rgba(0, 184, 141, 0.4);
+      padding: 12px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+    .navbar.scrolled {
+      padding: 8px 5%;
+      background: linear-gradient(135deg, rgba(10, 15, 44, 0.98), rgba(0, 184, 141, 0.3));
+    }
+    .logo-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+      text-shadow: 0 0 5px rgba(0, 184, 141, 0.8);
+    }
+    .logo-brand span {
+      color: var(--green-light);
+    }
+    .logo-brand::before {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 8px;
+      background: var(--green-light);
+      border-radius: 50%;
+      box-shadow: var(--glow-hover);
+      animation: pulse 1.2s infinite;
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: var(--transition);
+      position: relative;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--teal));
+      border-radius: 2px;
+      transition: var(--transition);
+      transform: translateX(-50%);
+    }
+    .nav-link:hover {
+      color: white;
+      box-shadow: var(--neon-glow);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .nav-link.active {
+      color: white;
+      background: rgba(0, 184, 141, 0.2);
+      box-shadow: var(--neon-glow);
+    }
+    .nav-link.active::after {
+      width: 100%;
+    }
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .language-toggle {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      margin-left: 15px;
+      transition: var(--transition);
+    }
+    .language-toggle:hover {
+      color: var(--green-light);
+    }
+    
+    /* 头部区域 */
     header {
-      background: linear-gradient(120deg, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+      background: linear-gradient(135deg, #051937, #004d7a, #008793, #00bf72);
       background-size: 300% 300%;
-      animation: gradientShift 10s ease infinite;
-      padding: 80px 20px 120px;
+      animation: gradientShift 12s ease infinite;
+      padding: 70px 20px 90px;
       position: relative;
       color: #fff;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
     }
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
@@ -45,69 +177,90 @@
     }
     .brand-overlay {
       position: absolute;
-      top: 24px;
-      left: 38px;
-      font-size: 36px;
-      font-weight: 700;
+      top: 20px;
+      left: 30px;
+      font-size: 32px;
+      font-weight: 800;
       color: rgba(255,255,255,0.98);
       z-index: 99;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.25);
+      text-shadow: 0 0 12px rgba(0, 184, 141, 0.7);
       letter-spacing: 1px;
       pointer-events: none;
       user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-overlay::before {
+      content: "";
+      display: block;
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: var(--glow);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
     }
     .header-flex {
       display: flex;
       align-items: center;
       position: relative;
       z-index: 2;
-      max-width: 1400px;
+      max-width: 1300px;
       margin: 0 auto;
-      min-height: 390px;
+      min-height: 360px;
+      gap: 30px;
     }
     .header-left {
-      width: 360px;
-      min-width: 300px;
+      width: 340px;
+      min-width: 280px;
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
-      padding-top: 55px;
+      padding-top: 50px;
     }
     .logo-center-box {
-      width: 220px;
-      height: 220px;
+      width: 200px;
+      height: 200px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 30px auto 0 auto;
+      margin: 20px auto 0;
+      position: relative;
+      transition: var(--transition);
+    }
+    .logo-center-box:hover {
+      transform: scale(1.05) rotate(2deg);
+      box-shadow: var(--neon-glow);
     }
     .logo-center-img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 32px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      border-radius: 28px;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.25);
       background: #fff;
-      padding: 16px;
-      transition: box-shadow 0.3s;
-      /* 禁止LOGO图片响应鼠标事件，右键弹出正常网页菜单 */
+      padding: 14px;
+      transition: var(--transition);
       pointer-events: none;
-      /* 下面两句保证LOGO不能拖动，但实际上 pointer-events: none 已经禁止任何交互 */
       -webkit-user-drag: none;
       user-drag: none;
-    }
-    .logo-center-img:hover {
-      box-shadow: 0 12px 36px rgba(0,0,0,0.30);
+      z-index: 2;
     }
     .header-right {
       flex: 1;
       min-width: 0;
-      padding-left: 60px;
+      padding-left: 50px;
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 40px;
+      gap: 30px;
       justify-content: space-between;
     }
     .main-content {
@@ -115,37 +268,59 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      max-width: 420px;
+      max-width: 400px;
       margin: 0 auto;
     }
     .logo-title {
-      font-size: 44px;
+      font-size: 40px;
       font-weight: 800;
-      line-height: 1.2;
+      line-height: 1.3;
       color: #fff;
-      text-shadow: 2px 2px 18px rgba(10,10,60,0.13);
-      letter-spacing: 1px;
-      margin-bottom: 30px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      letter-spacing: 0.8px;
+      margin-bottom: 25px;
       margin-top: 0;
       padding-left: 2px;
       text-align: center;
       width: 100%;
+      position: relative;
+      animation: titleFloat 8s infinite ease-in-out;
+    }
+    @keyframes titleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .logo-title::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      margin: 15px auto 0;
+      border-radius: 2px;
     }
     .subtitle-card {
       width: 100%;
-      background: rgba(255,255,255,0.18);
-      color: #e6e6e6;
-      padding: 18px 28px;
-      border-radius: 18px;
-      font-size: 20px;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 16px;
+      font-size: 18px;
       font-weight: 500;
-      line-height: 1.8;
-      box-shadow: 0 2px 18px rgba(0,0,0,0.06);
-      margin-bottom: 38px;
+      line-height: 1.7;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
       text-align: left;
       max-width: 100%;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(8px);
       box-sizing: border-box;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: var(--transition);
+    }
+    .subtitle-card:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.15);
     }
     .download-group {
       width: 100%;
@@ -153,9 +328,9 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
       box-sizing: border-box;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .download-btn-wrapper {
       flex: 1 1 0;
@@ -168,28 +343,67 @@
       width: 100%;
       min-width: 0;
       min-height: 52px;
-      background: rgba(255,255,255,0.25);
-      color: #00906f;
-      padding: 16px 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8));
+      color: var(--blue-dark);
+      padding: 14px 0;
       font-size: 17px;
       border-radius: 14px;
       text-decoration: none;
-      transition: all 0.22s;
+      transition: var(--transition);
       display: inline-flex;
       align-items: center;
-      font-weight: 700;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.13);
-      border: 1.5px solid rgba(0,184,141,0.2);
-      backdrop-filter: blur(7px);
-      letter-spacing: 1px;
       justify-content: center;
+      font-weight: 700;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.15), var(--glow-hover);
+      border: 2px solid rgba(0,184,141,0.4);
+      backdrop-filter: blur(10px);
+      letter-spacing: 1px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .download-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(0,184,141,0.2) 0%, rgba(0,184,141,0.4) 100%);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .download-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+      transition: 0.8s;
     }
     .download-btn:hover {
-      background: rgba(255,255,255,0.45);
-      color: #00b88d;
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      background: linear-gradient(135deg, rgba(255,255,255,1), rgba(255,255,255,0.9));
+      color: var(--green-dark);
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2), var(--neon-glow);
+    }
+    .download-btn:hover::before {
+      opacity: 1;
+    }
+    .download-btn:hover::after {
+      left: 100%;
+    }
+    .download-btn i {
+      margin-right: 8px;
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+    .download-btn:hover i {
+      transform: scale(1.15);
     }
     .qr-float {
       position: absolute;
@@ -200,228 +414,643 @@
       width: 160px;
       background: white;
       border-radius: 10px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2), 0 0 18px rgba(0, 184, 141, 0.5);
       padding: 10px;
       z-index: 10;
+      animation: float 3s ease-in-out infinite;
+      border: 2px solid var(--green-light);
+      text-align: center;
     }
-    .download-btn-wrapper:hover .qr-float { display: block; }
+    .qr-float img {
+      width: 100%;
+      height: auto;
+    }
+    .qr-float p {
+      margin: 5px 0 0;
+      font-size: 13px;
+      color: #333;
+    }
+    @keyframes float {
+      0% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-8px); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+    .download-btn-wrapper:hover .qr-float { 
+      display: block;
+      animation: fadeIn 0.4s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    
+    /* 轮播图 */
     .carousel-box {
-      width: 340px;
+      width: 320px;
       max-width: 95vw;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
-      background: rgba(255,255,255,0.11);
-      border-radius: 20px;
-      box-shadow: 0 6px 28px rgba(0,0,0,0.13);
+      background: transparent;
+      border-radius: 18px;
+      box-shadow: 0 5px 24px rgba(0,0,0,0.13);
       overflow: hidden;
       margin-top: 10px;
       margin-bottom: 0;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: var(--transition);
+      transform: perspective(1000px) rotateY(-5deg) rotateX(3deg);
+      animation: carouselFloat 6s infinite ease-in-out;
+      height: auto;
+    }
+    @keyframes carouselFloat {
+      0%, 100% { transform: perspective(1000px) rotateY(-5deg) rotateX(3deg) translateY(0); }
+      50% { transform: perspective(1000px) rotateY(-5deg) rotateX(3deg) translateY(-12px); }
+    }
+    .carousel-box:hover {
+      transform: perspective(1000px) rotateY(-5deg) rotateX(3deg) translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2), var(--neon-glow);
+      animation: none;
     }
     .carousel-img-wrap {
       width: 100%;
-      aspect-ratio: 9/16;
-      background: #eaf3f3;
+      height: auto;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      overflow: hidden;
     }
     .carousel-img-wrap img {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 14px;
-      box-shadow: 0 2px 18px rgba(0,0,0,0.08);
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.2);
       background: #fff;
       transition: opacity 0.4s;
       user-select: none;
       pointer-events: none;
+      z-index: 2;
+      object-fit: contain;
     }
-    .carousel-btn { display: none !important; }
+    .carousel-btn { 
+      display: none !important; 
+    }
     .carousel-dots {
       display: flex;
-      gap: 9px;
+      gap: 8px;
       justify-content: center;
       align-items: center;
-      margin: 13px 0 10px 0;
+      margin: 12px 0 8px;
+      position: relative;
+      z-index: 10;
     }
     .carousel-dot {
-      width: 11px;
-      height: 11px;
-      background: #fff;
-      opacity: 0.44;
+      width: 10px;
+      height: 10px;
+      background: rgba(255,255,255,0.5);
       border-radius: 50%;
       cursor: pointer;
-      transition: opacity 0.2s, background 0.2s;
-      border: 1px solid #e0e0e0;
+      transition: var(--transition);
+      border: 1px solid rgba(255,255,255,0.3);
     }
     .carousel-dot.active {
-      background: #00b88d;
-      opacity: 0.94;
-      border: 2px solid #fff;
+      background: var(--green);
+      opacity: 1;
+      border: 2px solid rgba(255,255,255,0.7);
+      transform: scale(1.2);
+      box-shadow: var(--neon-glow);
     }
-    .gray-section {
-      background: var(--gray-bg);
-      padding: 80px 20px;
+    .carousel-dot:hover {
+      background: var(--green-light);
+      transform: scale(1.3);
+      box-shadow: var(--neon-glow);
+    }
+    
+    /* 内容区块 */
+    section {
+      padding: 70px 30px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .section-in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section-header {
       text-align: center;
+      margin-bottom: 45px;
+      position: relative;
     }
-    .gray-section h2 {
-      font-size: 28px;
-      margin-bottom: 40px;
-      color: #0a0f2c;
+    .section-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      display: inline-block;
+      background: linear-gradient(90deg, var(--blue-dark), var(--green));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    }
+    .section-header h2 .emoji {
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: initial;
+    }
+    .section-header::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue-dark), var(--green));
+      margin: 15px auto 0;
+      border-radius: 2px;
+      box-shadow: var(--neon-glow);
+    }
+    .content-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
     }
     .info-block {
-      max-width: 800px;
-      margin: 0 auto 30px;
-      font-size: 18px;
-      color: #333;
-      line-height: 1.8;
-      text-align: left;
-    }
-    .info-block a { color: var(--green-dark); text-decoration: none; }
-    .info-block a:hover { text-decoration: underline; }
-    .intro-section, .why-section {
-      padding: 80px 20px;
-      text-align: center;
-    }
-    .intro-section { background-color: #ffffff; }
-    .why-section { background-color: #e6f5f1; }
-    .intro-section h2, .why-section h2 {
-      font-size: 28px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 30px;
       margin-bottom: 30px;
-      color: #0a0f2c;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(25px);
+      opacity: 0;
+      transition: transform 0.7s ease, opacity 0.7s ease, box-shadow 0.3s ease;
     }
-    .intro-section p, .why-section p {
-      max-width: 800px;
-      margin: 0 auto 20px;
-      font-size: 18px;
+    .info-block.in-view {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .info-block:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.12), var(--neon-glow);
+    }
+    .info-block::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--green), var(--teal));
+      box-shadow: var(--neon-glow);
+    }
+    .info-block p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    .info-block p:hover {
+      color: var(--green-dark);
+    }
+    .info-block strong {
+      color: var(--blue-dark);
+      font-weight: 600;
+    }
+    .whatcan-list, .safe-list {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size: 17px;
       color: #333;
       line-height: 1.8;
       text-align: left;
+      list-style: none;
+    }
+    .whatcan-list li, .safe-list li {
+      margin-bottom: 14px;
+      padding-left: 35px;
+      position: relative;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .whatcan-list li:hover, .safe-list li:hover {
+      transform: translateX(6px);
+      color: var(--green-dark);
+    }
+    .whatcan-list li::before, .safe-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 22px;
+      height: 22px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+      transition: var(--transition);
+      box-shadow: var(--neon-glow);
+    }
+    .whatcan-list li::before {
+      content: "✓";
+    }
+    .safe-list li::before {
+      content: "🛡";
+      background: var(--green);
+      font-size: 18px;
+      width: 24px;
+      height: 24px;
+      color: white;
+    }
+    
+    /* 视差效果 */
+    section {
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+    }
+    
+    /* 区块背景 */
+    .intro-section { 
+      background-color: #ffffff; 
+      background-image: 
+        radial-gradient(circle at 90% 10%, rgba(0, 214, 179, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 10% 90%, rgba(122, 79, 255, 0.05) 0%, transparent 30%);
+    }
+    .why-section { 
+      background-color: #e6f5f1; 
+      background-image: 
+        linear-gradient(45deg, rgba(0, 211, 212, 0.08) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0, 211, 212, 0.08) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0, 211, 212, 0.08) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0, 211, 212, 0.08) 75%);
+      background-size: 30px 30px;
     }
     .whatcan-section {
       background: linear-gradient(135deg, #eaf8f6 30%, #f3f7fd 100%);
-      padding: 80px 20px;
-      text-align: center;
-    }
-    .whatcan-section h2 {
-      font-size: 28px;
-      margin-bottom: 30px;
-      color: #0a0f2c;
-    }
-    .whatcan-section p {
-      max-width: 800px;
-      margin: 0 auto 18px auto;
-      font-size: 18px;
-      color: #333;
-      line-height: 1.8;
-      text-align: left;
-    }
-    .whatcan-list {
-      max-width: 800px;
-      margin: 0 auto 0 auto;
-      padding: 0;
-      font-size: 18px;
-      color: #333;
-      line-height: 1.9;
-      text-align: left;
-      list-style: none;
-    }
-    .whatcan-list li {
-      margin-bottom: 12px;
-      padding-left: 0;
-      position: relative;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0, 184, 141, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(122, 79, 255, 0.08) 0%, transparent 25%);
     }
     .safe-section {
       background: linear-gradient(135deg, #fff9e5 30%, #fff6ef 100%);
-      padding: 80px 20px;
+      background-image: 
+        radial-gradient(circle at 10% 80%, rgba(255, 77, 154, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(255, 204, 0, 0.08) 0%, transparent 30%);
+    }
+    .gray-section {
+      background: var(--gray-bg);
       text-align: center;
+      background-image: 
+        linear-gradient(45deg, rgba(0, 198, 255, 0.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0, 198, 255, 0.05) 25%, transparent 25%25%),
+        linear-gradient(45deg, transparent 75%, rgba(0, 198, 255, 0.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0, 198, 255, 0.05) 75%);
+      background-size: 30px 30px;
     }
-    .safe-section h2 {
-      font-size: 28px;
-      margin-bottom: 30px;
-      color: #b5811e;
-    }
-    .safe-section p {
-      max-width: 800px;
-      margin: 0 auto 18px auto;
-      font-size: 18px;
-      color: #333;
-      line-height: 1.8;
-      text-align: left;
-    }
-    .safe-list {
-      max-width: 800px;
-      margin: 0 auto 0 auto;
-      padding: 0;
-      font-size: 18px;
-      color: #333;
-      line-height: 1.9;
-      text-align: left;
-      list-style: none;
-    }
-    .safe-list li {
-      margin-bottom: 12px;
-      padding-left: 0;
-      position: relative;
-    }
+    
+    /* 底部 */
     footer {
       background: var(--blue-dark);
       color: #aaa;
       text-align: center;
-      padding: 40px 20px;
+      padding: 30px 20px 30px;
       font-size: 14px;
+      position: relative;
+      clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
     }
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--teal), var(--purple));
+    }
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+      text-align: left;
+    }
+    .footer-column {
+      padding: 8px;
+    }
+    .footer-column h3 {
+      color: white;
+      font-size: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      padding-bottom: 8px;
+    }
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 45px;
+      height: 2px;
+      background: var(--green);
+    }
+    .footer-links {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+    }
+    .footer-links a:hover {
+      color: white;
+      transform: translateX(5px);
+      text-shadow: var(--neon-glow);
+    }
+    .footer-links a i {
+      color: var(--green);
+      font-size: 13px;
+    }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: rgba(255,255,255,0.8);
+    }
+    .contact-item i {
+      color: var(--green);
+      font-size: 16px;
+      min-width: 22px;
+    }
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      transition: var(--transition);
+      font-size: 16px;
+      text-decoration: none;
+    }
+    .social-link:hover {
+      background: var(--green);
+      transform: translateY(-5px);
+      box-shadow: var(--neon-glow);
+    }
+    .copyright {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+    }
+    
+    /* 美洽客服按钮 */
     .meiqia-widget-btn, .meiqia-btn {
       display: block !important;
       position: fixed !important;
-      right: 24px !important;
-      bottom: 24px !important;
+      right: 20px !important;
+      bottom: 20px !important;
       left: auto !important;
       top: auto !important;
       z-index: 99999 !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.10) !important;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15), 0 0 12px rgba(0, 184, 141, 0.5) !important;
+      border-radius: 50% !important;
+      transition: var(--transition) !important;
     }
-    .meiqia-bar,
-    .meiqia-sidebar,
-    .meiqia-custom-tip,
-    .meiqia-widget-text-tip,
-    .meiqia-btn-text,
-    .meiqia-bar-title,
-    .meiqia-popup-tip,
-    .meiqia-bubble-tip,
-    .meiqia-popup-btn,
-    .meiqia-new-message-tip,
-    .meiqia-bubble-box,
-    .meiqia-message-popup,
-    .meiqia-sidebar-widget {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-      height: 0 !important;
-      width: 0 !important;
-      min-width: 0 !important;
-      min-height: 0 !important;
+    .meiqia-widget-btn:hover, .meiqia-btn:hover {
+      transform: scale(1.1) !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2), 0 0 18px rgba(0, 184, 141, 0.7) !important;
+    }
+    
+    /* 悬浮科技元素 */
+    .tech-element {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(0, 184, 141, 0.15);
+      filter: blur(18px);
+      z-index: 0;
+      animation: floatElement 12s infinite ease-in-out;
+    }
+    .tech-element:nth-child(1) {
+      top: 15%;
+      left: 8%;
+      width: 130px;
+      height: 130px;
+      animation-duration: 18s;
+    }
+    .tech-element:nth-child(2) {
+      top: 25%;
+      right: 10%;
+      width: 75px;
+      height: 75px;
+      animation-duration: 15s;
+      background: rgba(122, 79, 255, 0.15);
+    }
+    .tech-element:nth-child(3) {
+      bottom: 20%;
+      left: 15%;
+      width: 100px;
+      height: 100px;
+      animation-duration: 20s;
+      background: rgba(0, 211, 212, 0.15);
+    }
+    @keyframes floatElement {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(25px, -35px) rotate(15deg); }
+      50% { transform: translate(-15px, 25px) rotate(-10deg); }
+      75% { transform: translate(10px, 15px) rotate(10deg); }
+    }
+    
+    /* Modal styles - Fixed position and z-index */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      overflow-y: auto;
+    }
+    .modal-content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 0 20px rgba(0, 184, 141, 0.5);
+      position: relative;
+      animation: modalAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-origin: center center;
+    }
+    
+    @keyframes modalAppear {
+      0% { 
+        opacity: 0; 
+        transform: scale(0.95) translateY(20px); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: scale(1) translateY(0); 
+      }
+    }
+    
+    .modal-content h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 10px;
+    }
+    .modal-content p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .modal-content ul, .modal-content ol {
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+    .modal-content li {
+      margin-bottom: 12px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .modal-content strong {
+      color: var(--green-dark);
+    }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      color: #aaa;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      z-index: 10;
+    }
+    .close:hover,
+    .close:focus {
+      color: var(--green-dark);
+      text-decoration: none;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 900px) {
+      .header-flex {
+        flex-direction: column;
+        gap: 25px;
+      }
+      .header-left {
+        width: 100%;
+        padding-top: 15px;
+      }
+      .header-right {
+        padding-left: 0;
+        width: 100%;
+        max-width: 550px;
+      }
+      .logo-title {
+        font-size: 34px;
+      }
+      .subtitle-card {
+        font-size: 17px;
+      }
+      .carousel-box {
+        transform: perspective(800px) rotateY(-3deg) rotateX(3deg);
+      }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--blue-dark);
+        flex-direction: column;
+        padding: 15px;
+        gap: 12px;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .modal-content {
+        width: 90%;
+        padding: 20px;
+        max-height: 85vh;
+      }
     }
     @media (max-width: 700px) {
       body {
-        padding-left: 16px;
-        padding-right: 16px;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 60px;
       }
       header {
-        padding: 40px 12px 60px;
+        padding: 30px 10px 70px;
+        clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
       }
       .brand-overlay {
-        font-size: 1.1rem;
-        top: 12px;
-        left: 12px;
+        font-size: 18px;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        justify-content: center;
       }
       .header-flex {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
         min-height: auto;
       }
       .header-left {
@@ -430,157 +1059,244 @@
         align-items: center;
       }
       .logo-center-box {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto 12px auto;
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 10px;
       }
       .logo-center-img {
-        border-radius: 16px;
-        padding: 8px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.11);
+        border-radius: 14px;
+        padding: 7px;
+        box-shadow: 0 3px 14px rgba(0,0,0,0.11);
       }
       .header-right {
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         padding-left: 0;
+        padding: 0 10px;
         width: 100%;
       }
       .main-content {
         max-width: 100%;
-        padding: 0 6px;
+        padding: 0 5px;
       }
       .logo-title {
-        font-size: 1.5rem;
+        font-size: 26px;
         line-height: 1.4;
-        letter-spacing: 0.5px;
-        padding-left: 0;
-        text-align: center;
-        word-break: break-word;
-        margin-bottom: 18px;
+        letter-spacing: 0.4px;
+        margin-bottom: 15px;
       }
       .subtitle-card {
-        font-size: 1rem;
-        padding: 10px 12px;
-        margin-bottom: 20px;
-        border-radius: 12px;
+        font-size: 15px;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 10px;
         text-align: center;
         line-height: 1.5;
       }
       .download-group {
-        flex-direction: column !important;
-        gap: 18px !important;
-        align-items: center !important;
-        margin-bottom: 16px !important;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 12px;
         width: 100%;
       }
       .download-btn-wrapper {
         width: 100%;
-        display: flex !important;
-        justify-content: center !important;
+        display: flex;
+        justify-content: center;
       }
       .download-btn {
         width: 100%;
-        max-width: 420px;
-        min-height: 52px;
-        font-size: 1.1rem;
-        border-radius: 14px;
+        max-width: 400px;
+        min-height: 48px;
+        font-size: 15px;
+        border-radius: 12px;
         padding: 0;
         margin: 0 auto;
         justify-content: center;
         text-align: center;
-        font-weight: 800;
-        letter-spacing: 1px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
         box-sizing: border-box;
       }
       .carousel-box {
         width: 100%;
         max-width: 99vw;
-        margin-top: 18px;
-        border-radius: 14px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-top: 15px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transform: perspective(800px) rotateY(-2deg) rotateX(1deg);
+        height: auto;
       }
       .carousel-img-wrap {
         aspect-ratio: 9 / 16;
       }
       .carousel-img-wrap img {
-        border-radius: 10px;
+        border-radius: 8px;
       }
       .carousel-dots {
-        gap: 8px;
-        margin: 8px 0 6px 0;
+        gap: 7px;
+        margin: 7px 0 5px;
       }
       .carousel-dot, .carousel-dot.active {
-        width: 9px;
-        height: 9px;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
       }
       section {
-        padding: 32px 12px 32px 12px;
-        max-width: 100vw;
+        padding: 50px 15px;
       }
-      section h2 {
-        font-size: 1.25rem;
-        margin-bottom: 20px;
-        color: #0a0f2c;
-      }
-      section p,
-      .info-block,
-      .whatcan-list li,
-      .safe-list li {
-        font-size: 1rem;
-        line-height: 1.7;
-        margin-bottom: 14px;
-        color: #333;
-        text-align: left;
+      .section-header h2 {
+        font-size: 30px;
       }
       .info-block {
-        margin-bottom: 16px;
+        padding: 20px 15px 20px 25px;
+      }
+      .info-block p,
+      .whatcan-list li,
+      .safe-list li {
+        font-size: 16px;
+      }
+      .whatcan-list li, .safe-list li {
+        padding-left: 30px;
+      }
+      .whatcan-list li::before, .safe-list li::before {
+        top: 5px;
       }
       footer {
-        font-size: 0.9rem;
-        padding: 20px 12px;
+        padding: 40px 12px 25px;
+        clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%);
+      }
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .footer-column h3 {
+        margin-bottom: 12px;
+      }
+      .copyright {
+        margin-top: 25px;
+      }
+      .modal-content {
+        width: 95%;
+        padding: 15px;
+        max-height: 85vh;
+      }
+      .modal-content h2 {
+        font-size: 22px;
+      }
+      .modal-content p, .modal-content li {
+        font-size: 14px;
+      }
+      .modal {
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-links a {
+        font-size: 16px;
+      }
+      .contact-item {
+        font-size: 14px;
+      }
+      .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+      .footer-column h3 {
+        font-size: 20px;
       }
       .qr-float {
         display: none !important;
       }
+      .close {
+        top: 10px;
+        right: 15px;
+        font-size: 28px;
+      }
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
-<body>
-  <header>
+<body lang="zh-CN">
+  <!-- 悬浮科技元素 -->
+  <div class="tech-element"></div>
+  <div class="tech-element"></div>
+  <div class="tech-element"></div>
+  
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <a href="#" class="logo-brand">Seeds Talk</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link active zh-content">首页</a>
+      <a href="#home" class="nav-link active en-content">Home</a>
+      <a href="#features" class="nav-link zh-content">Seeds Talk介绍</a>
+      <a href="#features" class="nav-link en-content">About Seeds Talk</a>
+      <a href="#about" class="nav-link zh-content">Seeds Talk功能</a>
+      <a href="#about" class="nav-link en-content">Seeds Talk Features</a>
+      <a href="#security" class="nav-link zh-content">Seeds Talk安全保障</a>
+      <a href="#security" class="nav-link en-content">Seeds Talk Security</a>
+      <a href="#contact" class="nav-link zh-content">关于种子深科社区</a>
+      <a href="#contact" class="nav-link en-content">About Seeds DeepTech Society</a>
+    </div>
+    <button class="language-toggle" id="languageToggle">
+      <i class="fas fa-globe"></i>
+    </button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  <header id="home">
     <div id="particles-js"></div>
-    <div class="brand-overlay">Seeds Capital 种子深科社区</div>
+    <div class="brand-overlay zh-content">Seeds 种子深科社区</div>
+    <div class="brand-overlay en-content">Seeds DeepTech Society</div>
     <div class="header-flex">
       <div class="header-left">
         <div class="logo-center-box">
           <img class="logo-center-img"
                src="https://i.postimg.cc/3RH7DmBP/IMG-3649.png"
-               alt="App Logo"
-               style="pointer-events: none; -webkit-user-drag:none; user-drag:none; display: block; width: 100%; height: 100%;" />
+               alt="App Logo" />
         </div>
       </div>
       <div class="header-right">
         <div class="main-content">
-          <div class="logo-title">
-            新加坡种子深科社区  Seeds Talk
-          </div>
-          <div class="subtitle-card">
-            科技传播 从我做起 改变世界 从你开始
-          </div>
+          <div class="logo-title zh-content">新加坡种子深科社区 Seeds Talk</div>
+          <div class="logo-title en-content">Singapore Seeds DeepTech Community Seeds Talk</div>
+          <div class="subtitle-card zh-content">科技传播 从我做起 改变世界 从你开始</div>
+          <div class="subtitle-card en-content">Tech Spread Starts with Me, Change the World Starts with You</div>
           <div class="download-group">
             <div class="download-btn-wrapper">
-              <div class="qr-float">
-                <img src="https://i.postimg.cc/FKHSWTNz/image.png" alt="安卓二维码" style="width:100%; border-radius: 6px;" />
+              <div class="qr-float zh-content">
+                <img src="https://i.postimg.cc/FKHSWTNz/image.png" alt="安卓二维码" />
+                <p>安卓用户扫码下载</p>
               </div>
-              <a class="download-btn" href="https://d2j53zonmn0twl.cloudfront.net/SeedsTalk.apk" target="_blank">安卓手机下载</a>
+              <div class="qr-float en-content">
+                <img src="https://i.postimg.cc/FKHSWTNz/image.png" alt="Android QR Code" />
+                <p>Scan to Download for Android</p>
+              </div>
+              <a class="download-btn zh-content" href="https://d2j53zonmn0twl.cloudfront.net/SeedsTalk.apk" target="_blank">
+                <i class="fab fa-android"></i>安卓手机下载
+              </a>
+              <a class="download-btn en-content" href="https://d2j53zonmn0twl.cloudfront.net/SeedsTalk.apk" target="_blank">
+                <i class="fab fa-android"></i>Android
+              </a>
             </div>
             <div class="download-btn-wrapper">
-              <div class="qr-float">
-                <img src="https://i.postimg.cc/PxQxwnJg/1-1046872285-171-85-3-1023415603-ee7ab24d3ff14827c5ed749fee25e0ef.png" alt="iOS二维码" style="width:100%; border-radius: 6px;" />
+              <div class="qr-float zh-content">
+                <img src="https://i.postimg.cc/PxQxwnJg/1-1046872285-171-85-3-1023415603-ee7ab24d3ff14827c5ed749fee25e0ef.png" alt="iOS二维码" />
+                <p>苹果用户扫码下载</p>
               </div>
-              <a class="download-btn" href="https://testflight.apple.com/join/sveQV8Fe" target="_blank">苹果手机下载</a>
+              <div class="qr-float en-content">
+                <img src="https://i.postimg.cc/PxQxwnJg/1-1046872285-171-85-3-1023415603-ee7ab24d3ff14827c5ed749fee25e0ef.png" alt="iOS QR Code" />
+                <p>Scan to Download for iOS</p>
+              </div>
+              <a class="download-btn zh-content" href="https://testflight.apple.com/join/sveQV8Fe" target="_blank">
+                <i class="fab fa-apple"></i>苹果手机下载
+              </a>
+              <a class="download-btn en-content" href="https://testflight.apple.com/join/sveQV8Fe" target="_blank">
+                <i class="fab fa-apple"></i>iOS
+              </a>
             </div>
           </div>
         </div>
@@ -594,64 +1310,877 @@
     </div>
   </header>
 
-  <section class="intro-section">
-    <h2>🌟 Seeds Talk 是什么？</h2>
-    <p>Seeds Talk 是由新加坡官方投资机构 Seeds Capital 支持开发的官方 APP，专为科技文化传播打造的数字平台。</p>
-    <p>它不仅是信息发布工具，更是社区成员连接、激励、协作的“数字大脑”。你可以在这里参与任务获取奖励、传播科技文化、参加线上，线下活动、组建团队、提升影响力，扩展自己的人脉圈子。</p>
-    <p>Seeds Talk 正在构建一个开放、可信、有温度的全球科技文化生态。</p>
+  <section class="intro-section" id="features">
+    <div class="section-header">
+      <h2 class="zh-content"><span class="emoji">🌟</span> Seeds Talk 是什么？</h2>
+      <h2 class="en-content"><span class="emoji">🌟</span> What is Seeds Talk?</h2>
+    </div>
+    <div class="content-wrapper">
+      <div class="info-block">
+        <p class="zh-content">Seeds Talk 是由新加坡企业发展局及其旗下官方投资机构新加坡种子资本（Seeds Capital）、新加坡种子深科社区（Seeds DeepTech Society）联合开发的官方APP，专为科技文化传播打造。</p>
+        <p class="en-content">Seeds Talk is an official APP developed by Enterprise Singapore, its official investment arm Seeds Capital, and the Seeds DeepTech Society, dedicated to spreading tech culture.</p>
+        <p onclick="showModal('modal-influence')" class="zh-content">提升影响力：Seeds Talk让社区的活动、理念和文化传播得更广、更快，吸引更多科技爱好者加入。</p>
+        <p onclick="showModal('modal-influence')" class="en-content">Enhance Influence: Seeds Talk enables the community's activities, ideas, and culture to spread wider and faster, attracting more tech enthusiasts.</p>
+        <p onclick="showModal('modal-cohesion')" class="zh-content">增强凝聚力：成员可以随时交流、参与任务和活动，增强互动，提升归属感，让社区更有温度。</p>
+        <p onclick="showModal('modal-cohesion')" class="en-content">Strengthen Cohesion: Members can communicate, participate in tasks and activities anytime, enhancing interaction and belonging, making the community warmer.</p>
+        <p onclick="showModal('modal-management')" class="zh-content">高效组织管理：Seeds Talk帮助团队组建和管理，让活动安排、成员协作变得有序高效。</p>
+        <p onclick="showModal('modal-management')" class="en-content">Efficient Organization: Seeds Talk facilitates team formation and management, making activity planning and collaboration streamlined and effective.</p>
+        <p onclick="showModal('modal-feedback')" class="zh-content">即时激励反馈：通过任务、签到、抽奖等机制，激发成员积极参与，实时获得激励和认可。</p>
+        <p onclick="showModal('modal-feedback')" class="en-content">Instant Feedback: Through tasks, check-ins, and lotteries, Seeds Talk motivates active participation with real-time incentives and recognition.</p>
+        <p onclick="showModal('modal-experience')" class="zh-content">丰富参与体验：成员不仅能获取资讯、参与活动，还能收获奖励、拓展人脉，实现共同成长。</p>
+        <p onclick="showModal('modal-experience')" class="en-content">Enrich Experience: Members can access information, join activities, earn rewards, expand networks, and grow together.</p>
+        <p class="zh-content">Seeds Talk就是社区的"数字家园"，让每一位成员都能随时连接、共同成长，为全球科技文化传播贡献力量。</p>
+        <p class="en-content">Seeds Talk is the community's "digital home," connecting members for collective growth and contributing to global tech culture dissemination.</p>
+      </div>
+    </div>
   </section>
 
   <section class="whatcan-section">
-    <h2>💡 Seeds Talk 可以做什么？</h2>
-    <p>这款 APP 不仅是一个内容平台，更是一套激励系统与社群工具，它可以帮助你：</p>
-    <ul class="whatcan-list">
-      <li><strong>✅ 参与线上活动：</strong> 看视频、读文章、完成任务，获得现金奖励与成长值</li>
-      <li><strong>✅ 领取社区奖励：</strong> 完成传播任务可获得现金、实物礼品、参与社区优秀团队长专属内部项目</li>
-      <li><strong>✅ 组建传播团队：</strong> 团队长可邀请成员加入群聊，创建专属团队，发展自己的科技文化网络</li>
-      <li><strong>✅ 参与线下活动：</strong> 报名参与社区团队长组织的科技展览、环保公益、反诈宣传等线下活动</li>
-      <li><strong>✅ 获取荣誉认证：</strong> 社区成员可获得认证身份，提升社交影响力与专业公信力</li>
-    </ul>
-  </section>
-
-  <section class="why-section">
-    <h2>🚀 为什么要开发 Seeds Talk？</h2>
-    <p>社区开发这款 APP 的初衷很简单——让科技文化传播这件事，变得更加有组织、有温度、有力量。</p>
-    <p>过去，社区成员之间的互动零散、沟通困难、内容传播缺少系统化支持，很多人即使有热情也不知道从哪里开始。而 Seeds Talk 的出现，就是为了：</p>
-    <p><strong>增强成员之间的凝聚力：</strong>成员可以看到彼此的贡献、活动轨迹与成长记录。</p>
-    <p><strong>提升社区影响力：</strong>通过内容传播、任务激励、团队建设，使传播行为不断放大。</p>
-    <p><strong>让更多人参与进来：</strong>普通人不再是科技的“观众”，而是“行动者”。</p>
-  </section>
-
-  <section class="safe-section">
-    <h2>🛡 Seeds Talk 的正规性与安全保障</h2>
-    <p>我们理解每一位用户对“平台安全”的关切。正因如此，Seeds Talk 从一开始就以“合规、安全、信任”为第一要义：</p>
-    <ul class="safe-list">
-      <li><strong>🛡 政府背景：</strong>由新加坡 Seeds Capital 官方支持，拥有明确的法律注册资质与监管机构备案</li>
-      <li><strong>📜 严格审核制度：</strong>所有内容发布、账号行为均遵循新加坡 APP 数据合规审查流程</li>
-      <li><strong>🔐 数据隐私保护：</strong>采用国际标准的数据加密与用户身份验证机制，确保每位用户的信息与资金安全</li>
-      <li><strong>✔️ 实名绑定机制：</strong>提现、奖励领取需实名绑定银行卡，杜绝一切盗号与套现风险</li>
-    </ul>
-  </section>
-
-  <section class="gray-section">
-    <h2>🌐 关于种子深科社区</h2>
-    <div class="info-block">
-      新加坡种子深度科技社区（简称种子深科社区），是在新加坡政府的倡导和支持下，由新加坡企业发展局主导，新加坡种子资本推动的文化社区，以新加坡为起点，面向全球传播科技文化，构建开放、共融、可信的科技认知体系，致力于打造一个全球性的科技文化传播平台，让更多国家和公众理解科技、信任科技、支持科技。
+    <div class="section-header">
+      <h2 class="zh-content"><span class="emoji">💡</span> Seeds Talk 可以做什么？</h2>
+      <h2 class="en-content"><span class="emoji">💡</span> What Can Seeds Talk Do?</h2>
     </div>
-    <div class="info-block">
-  <strong>联系方式：</strong><br>
-  电话：+65 8394 0423<br>
-  邮箱：<a href="mailto:support@SeedsTalk.cc">support@SeedsTalk.cc</a><br>
-  地址：250 North Bridge Road, #28-00, Raffles City Tower, Singapore 179101
-</div>
-    <div class="info-block">
-      感谢每一位参与者，让科技文化传播有温度、有力量。
+    <div class="content-wrapper">
+      <div class="info-block">
+        <p class="zh-content">Seeds Talk 是一款功能丰富、专为科技爱好者和社区成员打造的互动APP，旨在提供多样化的服务与沉浸式社区体验。以下是 Seeds Talk 的核心功能：</p>
+        <p class="en-content">Seeds Talk is a feature-rich interactive APP for tech enthusiasts and community members, offering diverse services and immersive experiences. Here are its core features:</p>
+        <ul class="whatcan-list zh-content">
+          <li>参与社区线上活动：提供生活百科、反诈宣传、健康养生、科学辟谣等通俗易懂的科普内容，让你轻松获取实用知识。</li>
+          <li>线下活动：包括参观科技博物馆、反诈宣传、环保公益、慈善活动，以及登山、旅行、聚餐等多样化团队活动，增进成员间的连接与归属感。</li>
+          <li>实时交流互动：与社区成员即时聊天，分享见解、碰撞灵感、结识志同道合的朋友。</li>
+          <li>每日签到与抽奖：每日签到即可参与幸运抽奖，赢取现金红包、元气卡等惊喜奖励。</li>
+          <li>元气卡收集与兑换：通过参与活动、完成任务收集元气卡，集齐后可兑换精美实物奖品。</li>
+          <li>团队组建与管理：通过邀请码邀请好友加入你的团队，团队长可便捷管理成员并激励团队协作。</li>
+          <li>获取社区资讯：实时接收社区动态、科技新闻和活动通知，紧跟科技文化脉搏。</li>
+        </ul>
+        <ul class="whatcan-list en-content">
+          <li>Online Community Activities: Offers accessible content like life tips, anti-fraud awareness, health, and myth-busting, making knowledge acquisition easy.</li>
+          <li>Offline Activities: Includes tech museum visits, anti-fraud campaigns, environmental initiatives, charity events, and team activities like hiking, travel, and dinners to foster connections.</li>
+          <li>Real-Time Interaction: Chat instantly with members, share insights, spark ideas, and meet like-minded individuals.</li>
+          <li>Daily Check-Ins & Lotteries: Check in daily for lucky draws, winning cash, vitality cards, and other rewards.</li>
+          <li>Vitality Card Collection: Collect cards through tasks and events, redeemable for premium physical prizes.</li>
+          <li>Team Building & Management: Invite friends via codes to join teams; leaders can manage members and encourage collaboration.</li>
+          <li>Community Updates: Receive real-time news, tech updates, and event notifications to stay connected.</li>
+        </ul>
+        <p class="zh-content">Seeds Talk 不仅让你深度参与科技文化传播，还能收获知识、奖励与社区归属感，成为更具影响力的社区成员！立即加入，开启你的科技社区之旅！</p>
+        <p class="en-content">Seeds Talk lets you deeply engage in tech culture dissemination, gain knowledge, rewards, and a sense of community, becoming a more influential member! Join now to start your tech journey!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-section" id="about">
+    <div class="section-header">
+      <h2 class="zh-content"><span class="emoji">🚀</span> 为什么要开发 Seeds Talk？</h2>
+      <h2 class="en-content"><span class="emoji">🚀</span> Why Develop Seeds Talk?</h2>
+    </div>
+    <div class="content-wrapper">
+      <div class="info-block">
+        <p class="zh-content">为了让社区服务更加高效、便捷，同时增强成员之间的联系和归属感，我们决定开发Seeds Talk。通过数字化平台，社区可以打破时间和空间的限制，让每一位成员都能更方便地参与和互动。</p>
+        <p class="en-content">To make community services more efficient and convenient while strengthening member connections and belonging, we developed Seeds Talk. This digital platform breaks time and space barriers, enabling easier participation and interaction.</p>
+        <p class="zh-content">社区开发Seeds Talk的初衷很简单——让科技文化传播这件事，变得更加有组织、有温度、有力量。</p>
+        <p class="en-content">The community's goal in developing Seeds Talk is simple: to make tech culture dissemination more organized, warm, and impactful.</p>
+        <p class="zh-content">过去，社区成员之间的互动零散、沟通困难、内容传播缺少系统化支持，很多人即使有热情也不知道从哪里开始。而 Seeds Talk 的出现，就是为了：</p>
+        <p class="en-content">Previously, member interactions were fragmented, communication was challenging, and content dissemination lacked systematic support. Many enthusiastic individuals didn't know where to start. Seeds Talk was created to:</p>
+        <p class="zh-content"><strong>增强成员之间的凝聚力：</strong>成员可以看到彼此的贡献、活动轨迹与成长记录。</p>
+        <p class="en-content"><strong>Strengthen Cohesion:</strong> Members can view each other's contributions, activity tracks, and growth records.</p>
+        <p class="zh-content"><strong>提升社区影响力：</strong>通过内容传播、任务激励、团队建设，使传播行为不断放大。</p>
+        <p class="en-content"><strong>Boost Influence:</strong> Amplify dissemination through content sharing, task incentives, and team building.</p>
+        <p class="zh-content"><p><strong>让更多人参与进来：</strong>普通人不再是科技的"观众"，而是"行动者"。</p>
+        <p class="en-content"><strong>Engage More People:</strong> Transform ordinary individuals from "spectators" to "actors" in tech.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="safe-section" id="security">
+    <div class="section-header">
+      <h2 class="zh-content"><span class="emoji">🛡</span> Seeds Talk 的正规性与安全保障</h2>
+      <h2 class="en-content"><span class="emoji">🛡</span> Seeds Talk Legitimacy & Security</h2>
+    </div>
+    <div class="content-wrapper">
+      <div class="info-block">
+        <p class="zh-content">Seeds Talk 由新加坡企业发展局及其官方投资机构新加坡种子资本（Seeds Capital）、新加坡种子深科社区（Seeds DeepTech Society）联合开发，拥有权威官方背景和严格的合规保障。我们深知每一位用户对平台安全与信任的关注，因此从创立之初就始终坚持"合规、安全、信任"为首要原则：</p>
+        <p class="en-content">Seeds Talk, developed by Enterprise Singapore, Seeds Capital, and Seeds DeepTech Society, boasts an authoritative background and strict compliance. We prioritize "compliance, security, trust" to address user concerns from the outset:</p>
+        <ul class="safe-list zh-content">
+          <li><strong>官方背景，正规可靠</strong> 平台由新加坡政府相关机构指导和支持，开发流程合规透明，所有活动均受官方监管，确保平台正规、安全、可信。</li>
+          <li><strong>实名绑定机制，保障资金安全</strong> 用户在提现和领取奖励时，需完成实名认证并绑定本人银行卡，确保资金发放安全准确，有效杜绝冒领、套现等风险。</li>
+          <li><strong>数据隐私保护</strong> 平台严格遵循新加坡及国际数据安全标准，对用户信息进行加密处理，全方位保障每位成员的隐私和数据安全。</li>
+          <li><strong>公平透明的激励机制</strong> 所有奖励均来源于社区合作机构和公益资金，无任何充值入口、隐性收费或强制消费，用户可放心参与、自由体验。</li>
+          <li><strong>风险防范，健康社区</strong> Seeds Talk 坚决打击传销、诈骗等违法行为，设有举报和风控机制，全力保障成员的合法权益和社区的健康发展。</li>
+        </ul>
+        <ul class="safe-list en-content">
+          <li><strong>Official Backing, Reliable</strong> Guided by Singapore government agencies, with transparent development and regulated activities, ensuring legitimacy and safety.</li>
+          <li><strong>Real-Name Verification</strong> Users must verify identity and bind bank cards for withdrawals, ensuring secure and accurate fund distribution, preventing fraud.</li>
+          <li><strong>Data Privacy</strong> Adheres to Singapore and international data security standards, encrypting user information to protect privacy comprehensively.</li>
+          <li><strong>Transparent Incentives</strong> Rewards come from partner institutions and public funds, with no hidden fees or mandatory payments, ensuring a fair experience.</li>
+          <li><strong>Risk Prevention</strong> Combats illegal activities like pyramid schemes with reporting and risk control, safeguarding members and community health.</li>
+        </ul>
+        <p class="zh-content">Seeds Talk 致力于为每一位科技爱好者和社区成员，打造一个安全、可信、健康的互动平台，让大家都能安心参与、共同成长、携手进步。</p>
+        <p class="en-content">Seeds Talk is dedicated to creating a safe, trustworthy, and healthy platform for tech enthusiasts and members, enabling confident participation and collective growth.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="gray-section" id="contact">
+    <div class="section-header">
+      <h2 class="zh-content"><span class="emoji">🌐</span> 关于种子深科社区</h2>
+      <h2 class="en-content"><span class="emoji">🌐</span> About Seeds DeepTech Society</h2>
+    </div>
+    <div class="content-wrapper">
+      <div class="info-block">
+        <p class="zh-content">新加坡种子深度科技社区【Seeds DeepTech Society】（简称种子深科社区），是在新加坡政府的倡导和支持下，由新加坡企业发展局主导，新加坡种子资本推动的文化社区，以新加坡为起点，面向全球传播科技文化，构建开放、共融、可信的科技认知体系，致力于打造一个全球性的科技文化传播平台，让更多国家和公众理解科技、信任科技、支持科技。</p>
+        <p class="en-content">Seeds DeepTech Society, supported by Enterprise Singapore and Seeds Capital, is a cultural community starting from Singapore, aimed at global tech culture dissemination, building an open, inclusive, and trustworthy tech cognition system.</p>
+      </div>
     </div>
   </section>
 
   <footer>
-    新加坡种子深度科技社区 ©2001-2025 Seeds DeepTech Society 
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3 class="zh-content">关于我们</h3>
+        <h3 class="en-content">About Us</h3>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="showModal('modal-community-intro')"><i class="fas fa-chevron-right"></i><span class="zh-content">社区简介</span><span class="en-content">Community Introduction</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-development-history')"><i class="fas fa-chevron-right"></i><span class="zh-content">发展历程</span><span class="en-content">Development History</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-team-intro')"><i class="fas fa-chevron-right"></i><span class="zh-content">团队介绍</span><span class="en-content">Team Introduction</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-media-reports')"><i class="fas fa-chevron-right"></i><span class="zh-content">媒体报道</span><span class="en-content">Media Reports</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 class="zh-content">产品功能</h3>
+        <h3 class="en-content">Product Features</h3>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="showModal('modal-task-system')"><i class="fas fa-chevron-right"></i><span class="zh-content">线上活动</span><span class="en-content">Online Activities</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-offline-activities')"><i class="fas fa-chevron-right"></i><span class="zh-content">线下活动</span><span class="en-content">Offline Activities</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-team-building')"><i class="fas fa-chevron-right"></i><span class="zh-content">团队建设</span><span class="en-content">Team Building</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-honor-certification')"><i class="fas fa-chevron-right"></i><span class="zh-content">科普传播</span><span class="en-content">Science Dissemination</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 class="zh-content">帮助中心</h3>
+        <h3 class="en-content">Help Center</h3>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="showModal('modal-download-guide')"><i class="fas fa-chevron-right"></i><span class="zh-content">下载指南</span><span class="en-content">Download Guide</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-faq')"><i class="fas fa-chevron-right"></i><span class="zh-content">常见问题</span><span class="en-content">FAQ</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-usage-tutorial')"><i class="fas fa-chevron-right"></i><span class="zh-content">使用教程</span><span class="en-content">Usage Tutorial</span></a></li>
+          <li><a href="javascript:void(0)" onclick="showModal('modal-security-guarantee')"><i class="fas fa-chevron-right"></i><span class="zh-content">安全保障</span><span class="en-content">Security Guarantee</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 class="zh-content">联系我们</h3>
+        <h3 class="en-content">Contact Us</h3>
+        <div class="footer-contact">
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>250 North Bridge Road, #28-00, Raffles City Tower, Singapore 179101</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>+65 8394 0423</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>support@SeedsTalk.cc</span>
+          </div>
+          <div class="social-links">
+            <a href="https://www.facebook.com/EnterpriseSG/" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/EnterpriseSG" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/seedscapitalsg" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.instagram.com/enterprisesg/" class="social-link"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="copyright zh-content">新加坡种子深度科技社区 ©2001-2025 Seeds DeepTech Society</div>
+    <div class="copyright en-content">Singapore Seeds DeepTech Society ©2001-2025</div>
   </footer>
+
+  <!-- Modals for interactive content -->
+  <div id="modal-influence" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">提升影响力</h2>
+      <h2 class="en-content">Enhance Influence</h2>
+      <p class="zh-content">Seeds Talk让社区的活动、理念和文化传播得更广、更快，吸引更多科技爱好者加入。通过数字化工具，社区可以轻松分享内容，扩大影响力。</p>
+      <p class="en-content">Seeds Talk enables the community's activities, ideas, and culture to spread wider and faster, attracting more tech enthusiasts. Digital tools make content sharing and influence expansion effortless.</p>
+    </div>
+  </div>
+
+  <div id="modal-cohesion" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">增强凝聚力</h2>
+      <h2 class="en-content">Strengthen Cohesion</h2>
+      <p class="zh-content">成员可以随时交流、参与任务和活动，增强互动，提升归属感，让社区更有温度。通过实时聊天和活动参与，成员感受到社区的温暖。</p>
+      <p class="en-content">Members can communicate and participate in tasks and activities anytime, enhancing interaction and belonging, making the community warmer. Real-time chats and events foster a sense of warmth.</p>
+    </div>
+  </div>
+
+  <div id="modal-management" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">高效组织管理</h2>
+      <h2 class="en-content">Efficient Organization</h2>
+      <p class="zh-content">Seeds Talk帮助团队组建和管理，让活动安排、成员协作变得有序高效。提供工具如任务分配和进度跟踪。</p>
+      <p class="en-content">Seeds Talk facilitates team formation and management, streamlining activity planning and collaboration. Tools like task assignment and progress tracking are provided.</p>
+    </div>
+  </div>
+
+  <div id="modal-feedback" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">即时激励反馈</h2>
+      <h2 class="en-content">Instant Feedback</h2>
+      <p class="zh-content">通过任务、签到、抽奖等机制，激发成员积极参与，实时获得激励和认可。奖励系统设计激励用户持续参与。</p>
+      <p class="en-content">Through tasks, check-ins, and lotteries, Seeds Talk motivates active participation with real-time incentives and recognition. The reward system encourages ongoing engagement.</p>
+    </div>
+  </div>
+
+  <div id="modal-experience" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">丰富参与体验</h2>
+      <h2 class="en-content">Enrich Experience</h2>
+      <p class="zh-content">成员不仅能获取资讯、参与活动，还能收获奖励、拓展人脉，实现共同成长。综合体验让用户获得多方面收益。</p>
+      <p class="en-content">Members can not only access info and join activities but also earn rewards, expand networks, and grow together. Comprehensive experiences provide multifaceted benefits.</p>
+    </div>
+  </div>
+
+  <!-- Existing Modals with zh/en content -->
+  <div id="modal-community-intro" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">社区简介</h2>
+      <h2 class="en-content">Community Introduction</h2>
+      <p class="zh-content">种子深科社区（Seeds DeepTech Society），全称为新加坡种子资本深度科技社区，是在新加坡政府倡导和支持下，由新加坡企业发展局主导、新加坡种子资本（Seeds Capital）推动成立的国际科技文化社区。社区自2001年创立以来，以新加坡为起点，辐射全球，致力于推动科技文化的普及与创新，构建开放、共融、可信的全球科技认知体系。</p>
+      <p class="zh-content">种子深科社区的愿景是打造全球领先的科技文化传播平台，让更多国家和公众理解科技、信任科技、支持科技，并帮助社区成员通过团队建设和内部项目实现个人价值与财富自由，种子深科社区通过线上APP“Seeds Talk”及丰富多彩的线下活动，连接全球科技爱好者、从业者与普通大众，促进知识共享、创新协作和社会影响力的提升。社区核心价值观强调创新、包容、可持续发展，目前已吸引超过16万名成员，覆盖亚洲、欧洲、北美等地区。</p>
+      <p class="zh-content">作为Seeds Capital的战略文化合作平台，种子深科社区不仅获得资金和技术支持，还积极孵化前沿科技项目，推动初创企业从种子期成长为成熟企业。Seeds Capital专注于先进制造、健康生物医学、城市解决方案等领域，已投资160多家公司，注资超过2.2亿新元，带动社会资本9.5亿新元，助力新加坡成为亚洲科技创新高地（2022 Startup Blink全球初创生态指数亚洲第一，全球第七）。</p>
+      <p class="zh-content"><strong>种子深科社区的核心职能包括：</strong></p>
+      <p class="en-content">Seeds DeepTech Society is a cultural community supported by Singapore's government, led by Enterprise Singapore and Seeds Capital. Established in 2001, it spreads tech culture globally, building an open, inclusive tech cognition system. It helps members achieve personal value and wealth freedom through team building and projects. With Seeds Talk APP and offline activities, it connects enthusiasts for knowledge sharing and innovation. Core values: innovation, inclusion, sustainability. Over 100,000 members across Asia, Europe, North America.</p>
+      <p class="en-content"><strong>Our Core Functions:</strong></p>
+      <ul class="zh-content">
+        <li><strong>科技文化传播：</strong>通过线上平台和社群活动，普及前沿科技、健康科普、AI应用和科学辟谣等内容，鼓励成员有偿参与科技知识传播。</li>
+        <li><strong>投资与孵化：</strong>聚焦高潜力科技创新项目，助力企业孵化与成长，提供从资金、资源到全球市场的全链条赋能。</li>
+        <li><strong>社区支持与团队建设：</strong>为成员提供团队发展资源、全球项目合作机会和实体经济扶持，帮助大家拓展人脉、实现个人价值和财富自由。</li>
+      </ul>
+      <ul class="en-content">
+        <li><strong>Tech Culture Dissemination:</strong> Share cutting-edge knowledge via online platforms and encourage paid participation in tech dissemination.</li>
+        <li><strong>Investment & Incubation:</strong> Focus on early tech startups in advanced manufacturing, biomedical, urban solutions; invested in 160+ companies, over S$220M, attracting S$950M private investment.</li>
+        <li><strong>Community Support:</strong> Provide team building resources, high-tech projects, and economic support for team development and global collaboration.</li>
+      </ul>
+      <p class="zh-content">目前，种子深科社区已在新加坡、硅谷、伦敦、香港、墨尔本等全球创新城市设立分支，2025年香港办公室正式成立，成为中国高科技与文化交流的重要桥头堡。</p>
+      <p class="zh-content">加入种子深科社区，不仅可以参与科技文化传播、结识全球伙伴，还能通过创新项目和团队合作，实现共同成长与财富共享。种子深科社区期待你的加入，共创科技赋能的美好未来！</p>
+      <p class="en-content">Since 2001, we've helped Singapore rank #1 in Asia and #7 globally in startup ecosystems (Startup Blink 2022). Offices in Singapore, Silicon Valley, London, Hong Kong, Melbourne; Hong Kong office opens in 2025 as a bridge for China tech exchange. Join to spread tech and achieve prosperity through teams!</p>
+    </div>
+  </div>
+
+  <div id="modal-development-history" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">发展历程</h2>
+      <h2 class="en-content">Development History</h2>
+      <p class="zh-content"><strong>种子深科社区的发展历程源于新加坡的创新战略，将科技从实验室带向大众。以下是关键里程碑：</strong></p>
+      <p class="en-content"><strong>Seeds Capital DeepTech Community's development stems from Singapore's innovation strategy to bring tech from labs to the public. Key milestones:</strong></p>
+      <ul class="zh-content">
+        <li><strong>2001年：Seeds Capital成立</strong> 在新加坡企业发展局支持下，Seeds Capital（种子资本）诞生，专注为本地高科技初创企业提供种子期和早期投资。</li>
+        <li><strong>2015-2016年：社区理念孕育，初步线上社群启动</strong> 新加坡本地创业氛围高涨，Seeds Capital投资的初创项目不断涌现。一批科技创业者、科学家和热心市民开始尝试在线交流创新经验和科技资讯。社区首次提出“深度科技知识要走向大众”的理念，在社交媒体、论坛组建小规模线上讨论组。</li>
+        <li><strong>2017-2019年：正式组建种子深科社区，机制搭建与初创孵化</strong> Seeds Capital投资板块飞速发展，累计投资100+高科技企业，社会影响力提升。在Seeds Capital支持下，社区团队注册成为“新加坡种子深科社区”（Seeds DeepTech Society），并明确两大定位：商业板块由种子资本投资科技企业，获得投资收益；文化板块由社区主导，专注科技知识普及和文化传播。社区上线首个科普网站，发布简明易懂的科技小视频和原创文章，内容涵盖AI、医疗科技、生活百科、科学防骗等。启动会员激励机制，普通用户每天学习、分享都能获得奖励，极大提升活跃度。</li>
+        <li><strong>2020年：疫情下线上活动爆发式增长，投资与公益齐头并进</strong> 由于新冠疫情影响，社区全面转向线上，开启大规模科技直播课、云路演、主题科普公开课。以“科技抗疫”为主题，社区举办多场AI防疫知识讲座、医学科普直播，单场在线观看突破5000人。线上分享激励机制升级，吸引来自东南亚、中国、北美等地区新成员。社区规模突破8000人，活跃度大幅提升，出现第一批“科普达人”。</li>
+        <li><strong>2021-2022年：国际化加速，全球布局与产学研深度融合</strong> 在Seeds Capital推动下，社区先后在美国硅谷、英国伦敦、澳大利亚墨尔本等地设立分部，打通国际人才与创新网络。与新加坡本地高校、顶级科研机构、全球知名企业合作，联合举办“未来科技高峰论坛”“AI与健康创新营”等活动。社区与投资板块协同发力，为初创企业定制线上发布会、投融资对接和品牌宣传，部分服务开始收费，探索自我造血。会员人数突破2万人，志愿者团队扩展到东南亚及中国华南、华东地区。</li>
+        <li><strong>2023年：社会责任提升，科普公益全国多点开花</strong> 种子深科社区联合青岛市科技馆、国内高校等，举办“科技文化，你我共同传播”等线下大型科普活动，覆盖青少年、大学生和社会大众。发起“全民防骗月”“反诈知识挑战赛”，加强金融、互联网安全等热点领域科普，志愿者年参与超500人次，科普视频累计播放量突破百万。社区创新“科普+奖励+推荐”模式，进一步刺激普通人参与科技传播，推动形成“正向循环”。</li>
+        <li><strong>2024年：科技文化出海与产学研深度整合</strong> 社区加大内容国际化投入，推出多语种科普专栏，服务东南亚、北美等地用户。种子深科社区香港分部正式落地，为中新高科技企业交流、国际产学研合作提供平台。Seeds Capital持续投资人工智能、生命科学等前沿领域，社区举办国际科技创新大赛，吸引多国青年和创业者参与。推出产学研对接平台，撮合高校-企业-社区资源流动，部分项目获得政府和社会基金专项支持。</li>
+        <li><strong>2025年：全球影响力再升级，生态闭环全面形成</strong> 香港办公室正式挂牌，成为Seeds Capital在中国高科技和文化传播的重要桥头堡。推出全新“全球科普使者”计划，吸引各地有志青年参与科技文化国际传播。社区会员总数超4万人，遍布亚洲、欧美、澳洲。Seeds Capital投资规模及项目数量持续增长，社区通过内容、活动、平台服务多元化收入，基本实现自我运转。</li>
+      </ul>
+      <ul class="en-content">
+        <li><strong>2001: Foundation.</strong> Seeds Capital established as Enterprise Singapore's investment arm, focusing on early tech startups in science and engineering.</li>
+        <li><strong>2017: Investment Acceleration.</strong> Large-scale investments; by 2025, S$220M in 160+ companies, attracting S$950M private investment. Expanded to AI, blockchain, quantum.</li>
+        <li><strong>2020: Global Expansion.</strong> Offices in Silicon Valley, London; ranked Singapore #1 Asia, #7 global (Startup Blink). Named most active investor by Tech In Asia.</li>
+        <li><strong>2021:</strong> Launched Seeds Talk APP, shifting to culture dissemination; supported 25 startups raising S$200M.</li>
+        <li><strong>2023: Deepened Collaboration.</strong> Co-investment plan with VC/CVC/family offices. Expanded teams to UK, Canada, Australia; hosted Falling Walls Lab Singapore for industry-academia fusion.</li>
+        <li><strong>2024 Aug:</strong> Merged with EDBI into SG Growth Capital, enhancing innovation support and international partnerships in Southeast Asia and Europe.</li>
+        <li><strong>2025: New Chapter.</strong> Hong Kong office opens as China bridge. Feb: S$150M for deep tech startups, catalyzing S$300M. Appointed 20 new partners for advanced manufacturing, agrifood tech. July: Investments like Rebee (home rehab tech) in medical field.</li>
+      </ul>
+      <p class="zh-content"><strong>未来展望：</strong> 种子深科社区将在新加坡种子资本强大资金与全球网络支撑下，继续推动科技文化全球普及，服务更多初创企业和普通公众，打造国际一流的科技创新生态和社会影响力平台。</p>
+      <p class="en-content"><strong>Future Outlook:</strong> The community's development revolves around "tech fusion for value change," helping members start with tech dissemination and progress to projects for team growth. Start with a 50-person team and expand to regional studios!</p>
+    </div>
+  </div>
+  
+  <!-- 新增的模态框 -->
+  <div id="modal-team-intro" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">团队介绍</h2>
+      <h2 class="en-content">Team Introduction</h2>
+      <p class="zh-content"><strong>Seeds DeepTech Society（新加坡种子深度科技社区）背靠新加坡政府及顶尖科技与投资管理机构，由一支具备全球视野与多元专业背景的管理和顾问团队共同领导。团队成员涵盖企业发展、投资管理、科技创新、风险合规、资本运营等核心领域，为社区的全球化发展与可持续运营提供坚实保障。</strong></p>
+      <p class="en-content"><strong>The core team of Seeds Talk consists of seasoned experts from Enterprise Singapore and Seeds Capital, with extensive experience in tech community operations and digital product development.</strong></p>
+      <ul class="zh-content">
+        <li><strong>Png Cheong Boon - 主席｜新加坡经济发展局（EDB）</strong> 学历：康奈尔大学电气工程学士、斯坦福大学 Sloan Fellows 管理学硕士。履历：1993年加入EDB；历任 SPRING Singapore CEO（2008–2013）、JTC CEO（2013–2017）、贸工部常任秘书（2017–2018）、EnterpriseSG CEO（2018–2023）；2023年出任EDB主席、SG Growth Capital董事长，并担任多个科技创新与投资机构董事。代表项目：主导国家级科技园区升级、“一带一路”产业战略、制造业转型升级。社区职责：定义长期战略蓝图，统筹全球合作，对接国家政策，监督社区发展。</li>
+        <li><strong>Cindy Khoo - 董事总经理｜Enterprise Singapore</strong> 学历：哈佛大学公共管理硕士；伊利诺伊大学双学士（电气与计算机工程、政治学）。履历：曾担任总理公署（策略组）副常任秘书；现任 EnterpriseSG 董事总经理，兼任 Seeds Capital 主席、SG Growth Capital 副董事长、SGInnovate 董事等。代表项目：构建 Singapore Carbon Services Hub、国际企业创新赋能计划、多国“走出去”战略。社区职责：推动科技企业国际化，加速 Seeds Talk 的跨境传播与融资对接，搭建企业服务体系。</li>
+        <li><strong>Jermaine Loy - 董事总经理｜EDB</strong> 学历与履历：拥有政府和跨国企业创新管理背景，参与东南亚和欧美国际市场拓展项目。代表项目：主导商务合作平台拓展，构建区域创新生态圈。社区职责：牵头建立全球创新联盟，负责产业合作伙伴对接与资源融合。</li>
+        <li><strong>Andrew Lim - 法律顾问合伙人｜Allen & Gledhill</strong> 学历与履历：新加坡知名律所合伙人，精通跨境并购、区块链与知识产权法律。代表项目：参与多起科技企业的法务结构设计与知识产权布局。社区职责：提供法律合规咨询，保障Seeds项目和活动全流程合法合规运行。</li>
+        <li><strong>David Toh - 治理与风险合规总监｜PwC</strong> 学历与履历：资深注册会计师，曾主导政府与企业内控体系建设。代表项目：构建并实施大型项目的审计与风控机制。社区职责：设计社区治理结构，监督财务管理与业务合规性。</li>
+        <li><strong>Choo Yong Cheen - 私募股权首席投资官｜GIC</strong> 学历与履历：GIC 私募部门负责人，擅长资本运作和产业基金管理。代表项目：投资生物医药与清洁能源龙头企业，实现高回报和社会价值。社区职责：制定社区资本运作策略，优化投后增长计划并支持重点项目。</li>
+        <li><strong>Lim Kuo Yi - 联合创始人兼管理合伙人｜Monk’s Hill Ventures</strong> 学历与履历：曾任谷歌亚太区高管，核心投资人之一，深耕东南亚科技领域。代表项目：投资覆盖 P2P、AI、大数据等创新领域，为多家初创企业提供早期支持。社区职责：提供早期项目战略指导，引入系统化风险投资流程与网络资源。</li>
+        <li><strong>Russell Tham - 新兴科技主管董事总经理｜Temasek</strong> 学历与履历：Temasek 旗下新兴科技负责人，负责全球AI与生命科学投资。代表项目：引入多支重大AI基金，参与多国生科创新联盟项目。社区职责：推动 AI、生命科学等前沿领域的产业生态建设与资本对接。</li>
+        <li><strong>Tang Zhi Hui - 高级总监｜新加坡贸工部（MTI）</strong> 学历与履历：长期参与国家级产业政策和产学研融合规划。代表项目：推动国家科技研发计划和产业联盟对接。社区职责：确保平台活动契合国家法规政策，统筹政产学合作资源。</li>
+        <li><strong>CHOO Heng Tong - 首席执行官｜SG Growth Capital & EDB 执行副总裁</strong> 履历：拥有20年全球创新与投资经验，曾主导科技园区与产业基金建设。代表项目：推动 Southeast Asia Innovation Hub 建设及国际技术孵化项目。社区职责：统筹社区运营与发展战略，推动跨境协作与产品服务落地。</li>
+        <li><strong>Paul NG - 首席企业官 / EDBI CEO｜SG Growth Capital</strong> 履历：参与多个大型科技基金及孵化器项目，如 EDBI Early-Stage Fund。代表项目：引导科技企业成长路径，支持创新生态体系建设。社区职责：建立社区投融资和孵化机制，提升Seeds项目的市场竞争力。</li>
+        <li><strong>Kaixin TAN - 总经理｜Seeds Capital</strong> 履历：早期投资专家，成功孵化多个 AI 与医疗科技初创。代表项目：参与评估与推进多项新创项目进入国际孵化网络。社区职责：带领项目评审与筛选，搭建孵化平台与资源支持系统。</li>
+        <li><strong>YEUNG Chia Li - 高级合伙人｜EDBI</strong> 履历：企业并购和资本市场操作经验者，曾辅导科技企业IPO。代表项目：管理投后增值计划，协助多家创新企业规模化发展。社区职责：负责项目投后增值、资源匹配及资本结构优化。</li>
+        <li><strong>Charmaine KNG - 合伙人（数字经济）｜EDBI</strong> 履历：数字化转型顾问，主导政府与企业数字平台构建项目。代表项目：领导 Digital Economy Acceleration Office 数字经济项目实施。社区职责：负责Seeds Talk产品功能拓展与数字生态建设。</li>
+        <li><strong>Jolene OOI - 合伙人（医疗健康）｜EDBI</strong> 履历：医疗健康投资专家，推动初创与医院/研究机构合作。代表项目：组织 Healthcare Innovation Challenge、推进健康孵化项目。社区职责：引领社区医疗健康板块，推进产学研协作与项目孵化。</li>
+        <li><strong>Christine GIAM - 合伙人（早期投资）｜EDBI</strong> 履历：管理早期基金运作，具初创项目评估与资本配置经验。代表项目：Early-Stage Startup Fund 评审委员会成员。社区职责：统筹基金投资规划与执行，筛选与支持早期创新企业。</li>
+        <li><strong>Loseana NG - 总法律顾问 & 战略与IT主管｜SG Growth Capital</strong> 履历：兼具项目法务与信息安全背景，曾服务于大型科技项目。代表项目：Facebook/Meta政策合规咨询与系统安全升级项目。社区职责：保障社区项目合规运营，规划IT基础架构及安全防护。</li>
+        <li><strong>Serene KENG - 投资组合增长与传播总监｜SG Growth Capital</strong> 履历：品牌传播专家， 曾为多家创新企业制定全球传播策略。代表项目：实施Tech100大会品牌传播，带动社群增长与媒体关注。社区职责：负责品牌传播、国际媒体关系和社区用户增长规划。</li>
+        <li><strong>ANG Jen Keng - 财务与运营总监｜SG Growth Capital</strong> 履历：大型企业财务与运营管理专家，参与创新基金预算规划。代表项目：监督科技基金年度财务审核与成本效率优化。社区职责：管理社区财务、预算分配及运营流程精细化。</li>
+        <li><strong>Peggy CHUA & Dionne QUAH - 人力资源与行政主管｜SG Growth Capital</strong> 履历：组织发展与人才体系专家，曾设立高效HR体系与文化建设项目。社区职责：设计社区人才招聘、培训与激励机制，强化团队协作文化与凝聚力。</li>
+        <li><strong>LEE Li Ting - 财务总监｜SG Growth Capital</strong> 履历：资深审计与资本运作专家，负责基金及项目资本结构规划。代表项目：主导资本结构优化项目与跨基金联合审计。社区职责：监管社区及项目的财务状况，确保审计合规与财务稳健。</li>
+      </ul>
+      <ul class="en-content">
+        <li><strong>Dr. Li Weiming</strong> - Community Lead, 15 years of tech community experience</li>
+        <li><strong>Ms. Zhang Lili</strong> - Product Director, former Google PM</li>
+        <li><strong>Mr. Chen Zhiqiang</strong> - Tech Lead, blockchain and AI expert</li>
+        <li><strong>Ms. Wang Yawen</strong> - Marketing Director, tech communication specialist</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div id="modal-media-reports" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">媒体报道</h2>
+      <h2 class="en-content">Media Reports</h2>
+      <p class="zh-content"><strong>近年来，种子深科社区和Seeds Capital不断受到各大主流媒体与专业平台的关注与报道。以下是部分代表性媒体报道（含中英文标题及链接），见证我们不断成长、持续创新的步伐。</strong></p>
+      <p class="en-content"><strong>Seeds Talk and Seeds DeepTech Society have been featured in several prominent media outlets. Below are selected reports (with Chinese/English titles and links) highlighting our growth and innovation.</strong></p>
+      <ul class="zh-content">
+        <li><strong>新浪财经：</strong>《把科技带进生活，把热爱变成行动——认识一下“新加坡种子深科社区”》 <a href="https://finance.sina.com.cn/jjxw/2025-06-11/doc-inezskcq8186024.shtml?froms=ggmp" target="_blank">链接</a></li>
+        <li><strong>Bilibili 财经专栏：</strong>《也需要平台加速——走进种子深科社区这个“深度科技的助推器”》 <a href="https://www.bilibili.com/read/cv41266732/" target="_blank">链接</a></li>
+        <li><strong>新加坡联合早报：</strong>《种子深科社区：打造科技文化传播新平台》</li>
+        <li><strong>TechCrunch:</strong> “Singapore government-backed tech community app Seeds Talk officially launched” （新加坡政府支持的科技社区应用Seeds Talk正式上线）</li>
+        <li><strong>亚洲科技评论：</strong>《Seeds Talk：连接科技爱好者与普通大众的创新桥梁》</li>
+        <li><strong>Bloomberg:</strong> “Singapore government pushes new initiatives in science and technology culture” （新加坡政府推动科技文化传播新举措）</li>
+        <li><strong>36氪：</strong>《新加坡“种子深科社区”入华，激活科普新动力》</li>
+        <li><strong>Forbes China:</strong> “Seeds Capital: Investing in Tech Innovation and Empowering Community Economy” （Seeds Capital：投资科技创新，赋能社区经济）</li>
+        <li><strong>Financial Times:</strong> “Deep Tech Community: Singapore’s Soft Power Global Benchmark” （深科社区：新加坡科技软实力的全球范本）</li>
+        <li><strong>南华早报：</strong>《深度科技社区布局亚洲，推动中新科技交流》</li>
+        <li><strong>澎湃新闻：</strong>《“种子深科社区”让高科技走进千家万户》</li>
+        <li><strong>The Business Times:</strong> “Seeds Talk: How Science Popularization and Investment Deeply Integrate” （Seeds Talk：科普与投资如何深度结合）</li>
+        <li><strong>The Straits Times:</strong> “Tech for Good: Seeds Deep Tech Community Helps Social Digital Transformation” （科技向善：种子深科社区助力社会数字化转型）</li>
+        <li><strong>中国日报：</strong>《中新企业共建科技社区 助力青年科普成长》</li>
+        <li><strong>新华网：</strong>《新加坡种子深科社区探索中外科技文化共创新模式》</li>
+        <li><strong>环球网：</strong>《新加坡科技社区“出海”，中国落地首站青岛》</li>
+        <li><strong>VentureBeat:</strong> “Seeds Talk App Gains Key Support from Enterprise Singapore” （Seeds Talk应用获新加坡企业发展局重点推荐）</li>
+        <li><strong>科技日报：</strong>《种子深科社区推动前沿科技普及，促进产学研融合》</li>
+        <li><strong>Harvard Business Review:</strong> “How Seeds Capital Drives Sustainable Development of Innovative Tech Communities” （Seeds Capital如何驱动创新型科技社区的可持续发展？）</li>
+        <li><strong>21世纪经济报道：</strong>《新加坡种子资本：用投资反哺全球科普》</li>
+        <li><strong>TechNode:</strong> “Deep Tech Community: The New Infrastructure for Science Communication” （深科社区：科技文化传播的“新基建”）</li>
+        <li><strong>Business Weekly:</strong> “Dual Engines of Tech Innovation and Community Economy—Singapore Experience” （科技创新与社区经济双轮驱动——新加坡经验）</li>
+        <li><strong>经济观察报：</strong>《新加坡“科技+文化”模式走红，深科社区引关注》</li>
+        <li><strong>IT时报：</strong>《深科社区：用互联网思维玩转全球科普》</li>
+        <li><strong>网易科技：</strong>《新加坡Seeds Talk落地中国，推动全民科学素养提升》</li>
+        <li><strong>人民日报海外版：</strong>《中新携手科普传播 共建数字文明》</li>
+        <li><strong>IT桔子：</strong>《社区经济如何带动高科技企业全球化？看新加坡深科社区》</li>
+        <li><strong>TechNode Global:</strong> “SEEDS Capital appoints 20 new partners to catalyze at least US$220M of investments into Singapore‑based deep tech startups” （SEEDS Capital任命20家新合投伙伴，带动超2.2亿美元投资新加坡深科技企业） <a href="https://technode.global/2025/02/04/seeds-capital-appoints-20-new-partners-to-catalyse-least-220m-of-investments-into-singapore-based-deep-tech-startups/" target="_blank">链接</a></li>
+        <li><strong>Business Times:</strong> “Seeds Capital sets aside S$150 million for co‑investments into deep‑tech startups” （Seeds Capital拨款1.5亿新元联合投资深科技初创企业） <a href="https://www.businesstimes.com.sg/startups-tech/technology/seeds-capital-sets-aside-s150-million-co-investments-deep-tech-startups" target="_blank">链接</a></li>
+        <li><strong>Singapore Business Review:</strong> “SEEDS appoints 20 new partners to drive $300m deep tech investments” （SEEDS任命20家新伙伴推动3亿新元深科技投资） <a href="https://sbr.com.sg/markets-investing/news/seeds-appoints-20-new-partners-drive-300m-deep-tech-investments" target="_blank">链接</a></li>
+        <li><strong>Digital News Asia:</strong> “SEEDS Capital appoints 20 new partners to catalyse at least US$219.5 million of investments into Singapore‑based deep tech startups” （SEEDS Capital任命20家新合投伙伴，推动新加坡深科技企业逾2.19亿美元投资） <a href="https://www.digitalnewsasia.com/startups/seeds-capital-appoints-20-new-partners-catalyse-least-us2195-million-investments-singapore" target="_blank">链接</a></li>
+        <li><strong>EnterpriseSG / EDB:</strong> “Formation of SG Growth Capital to bolster Singapore’s efforts in building innovative enterprises” （成立SG Growth Capital，推动新加坡创新企业成长） <a href="https://www.edb.gov.sg/en/about-edb/media-releases-publications/formation-of-sg-growth-capital-to-bolster-singapores-efforts-in-building-innovative-enterprises.html" target="_blank">链接</a></li>
+        <li><strong>Seeds Capital 官网新闻稿：</strong> Press Release — SEEDS appoints 20 new partners to catalyse at least S$300 million of investments （官网新闻稿：SEEDS任命20家新合投伙伴，带动3亿新元投资） <a href="https://seedscapital.sg/news/press-releases/" target="_blank">链接</a></li>
+      </ul>
+      <ul class="en-content">
+        <li><strong>Lianhe Zaobao -</strong> "Seeds DeepTech Society: Building a New Platform for Tech Culture Dissemination"</li>
+        <li><strong>TechCrunch -</strong> "Seeds Talk: Singapore Government-Backed Tech Community App Officially Launches"</li>
+        <li><strong>Tech Review Asia -</strong> "Seeds Talk: An Innovative Bridge Connecting Tech Enthusiasts and the Public"</li>
+        <li><strong>Bloomberg -</strong> "Singapore Government's New Initiative to Promote Tech Culture"</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div id="modal-task-system" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">线上活动</h2>
+      <h2 class="en-content">Online Activities</h2>
+      <p class="zh-content">作为新加坡种子资本支持的科技文化传播社区，种子深科社区始终致力于让<strong>“普通人也能轻松参与科技传播”</strong>，而我们的线上活动体系正是这一理念的延伸与落地。</p>
+      <p class="en-content">As a tech culture dissemination community supported by Singapore Seeds Capital, Seeds DeepTech Society is committed to enabling <strong>"ordinary people to easily participate in tech dissemination"</strong>, and our online activity system is an extension and implementation of this concept.</p>
+      <p class="zh-content"><strong>✅【1】Seeds Talk：人人可参与的科技文化互动平台</strong></p>
+      <p class="en-content"><strong>✅【1】Seeds Talk: An interactive platform for tech culture that everyone can participate in</strong></p>
+      <p class="zh-content">每天，用户只需打开Seeds Talk平台并完成签到，即可自动获得2次抽奖机会。这是我们鼓励公众日常参与的一种轻量化方式，让<strong>“参与科技”</strong>成为一种习惯。</p>
+      <p class="en-content">Every day, users just need to open the Seeds Talk platform and complete check-in to automatically get 2 lottery chances. This is a lightweight way to encourage public daily participation, making <strong>"participating in tech"</strong> a habit.</p>
+      <p class="zh-content"><strong>🎯【2】100%中奖的科技抽奖系统</strong></p>
+      <p class="en-content"><strong>🎯【2】100% winning tech lottery system</strong></p>
+      <p class="zh-content">在签到后进入抽奖页面，用户将看到一个转盘，奖项丰富且100%中奖，包括：</p>
+      <p class="en-content">After check-in, enter the lottery page, users will see a wheel, with rich prizes and 100% win rate, including:</p>
+      <ul class="zh-content">
+        <li>8.8元现金红包</li>
+        <li>“深科好礼遇”字卡（共5种，集齐可兑换实物）</li>
+      </ul>
+      <ul class="en-content">
+        <li>8.8 yuan cash red packet</li>
+        <li>"DeepTech Good Encounter" word cards (5 types, collect all to redeem physical items)</li>
+      </ul>
+      <p class="zh-content">集齐5种字卡后，即可合成一张元气卡，用于兑换商城中的高价值礼品。</p>
+      <p class="en-content">After collecting 5 types of word cards, synthesize one vitality card for exchanging high-value gifts in the mall.</p>
+      <p class="zh-content"><strong>🛍【3】元气卡商城：科技传播的激励回馈</strong></p>
+      <p class="en-content"><strong>🛍【3】Vitality Card Mall: Incentives for tech dissemination</strong></p>
+      <p class="zh-content">持有元气卡的用户可以前往社区商城，兑换实物好礼，包括：</p>
+      <p class="en-content">Users with vitality cards can go to the community mall to redeem physical gifts, including:</p>
+      <ul class="zh-content">
+        <li>苹果16 Pro Max</li>
+        <li>空调、冰箱等家用电器</li>
+        <li>以及各种好礼</li>
+      </ul>
+      <ul class="en-content">
+        <li>Apple 16 Pro Max</li>
+        <li>Air conditioners, refrigerators, etc. household appliances</li>
+        <li>And various good gifts</li>
+      </ul>
+      <p class="zh-content">这些奖励均由社区统一采购、无须用户承担额外费用，是对用户参与科技文化传播的回馈。</p>
+      <p class="en-content">These rewards are uniformly purchased by the community, no extra cost for users, as feedback for participating in tech culture dissemination.</p>
+      <p class="zh-content"><strong>👥【4】邀请奖励：形成传播合力</strong></p>
+      <p class="en-content"><strong>👥【4】Invitation Rewards: Forming dissemination synergy</strong></p>
+      <p class="zh-content">社区设有明确的团队裂变激励机制：</p>
+      <p class="en-content">The community has a clear team fission incentive mechanism:</p>
+      <ul class="zh-content">
+        <li>邀请好友注册并实名认证，可获得3次抽奖机会</li>
+        <li>若好友兑换价值100元奖品，你可获得20元现金奖励</li>
+        <li>推荐最多支持3级分润机制（2%-10%-5%）</li>
+      </ul>
+      <ul class="en-content">
+        <li>Invite friends to register and real-name authenticate, get 3 lottery chances</li>
+        <li>If friend redeems 100 yuan prize, you get 20 yuan cash reward</li>
+        <li>Recommendation supports up to 3 levels of profit sharing (2%-10%-5%)</li>
+      </ul>
+      <p class="zh-content"><strong>📚【5】传播内容即价值输出</strong></p>
+      <p class="en-content"><strong>📚【5】Dissemination content is value output</strong></p>
+      <p class="zh-content">社区平台每天更新大量通俗易懂的科技文化内容，包括：</p>
+      <p class="en-content">The community platform updates a lot of easy-to-understand tech culture content daily, including:</p>
+      <ul class="zh-content">
+        <li>生活百科</li>
+        <li>健康养生</li>
+        <li>反诈宣传</li>
+        <li>前沿科技知识</li>
+      </ul>
+      <ul class="en-content">
+        <li>Life encyclopedia</li>
+        <li>Health maintenance</li>
+        <li>Anti-fraud propaganda</li>
+        <li>Cutting-edge tech knowledge</li>
+      </ul>
+      <p class="zh-content">社区成员可一键转发至微信、朋友圈等社交平台，借此完成<strong>“知识传播”</strong>任务，推动科技文化在日常生活中的普及。</p>
+      <p class="en-content">Community members can one-click forward to WeChat, Moments, etc., to complete <strong>"knowledge dissemination"</strong> tasks, promoting tech culture in daily life.</p>
+    </div>
+  </div>
+  
+  <div id="modal-offline-activities" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">线下活动</h2>
+      <h2 class="en-content">Offline Activities</h2>
+      <p class="zh-content"><strong>一、科技文化的实践传播</strong></p>
+      <p class="en-content"><strong>1. Practical Dissemination of Tech Culture</strong></p>
+      <p class="zh-content">作为新加坡种子资本旗下文化板块的重要组成，种子深科社区不仅在线上构建科技知识传播生态，也通过线下社会实践活动，将科技文化从网络带入现实生活，增强公众认知、提升社区影响力。</p>
+      <p class="en-content">As an important part of the cultural sector under Singapore Seeds Capital, Seeds DeepTech Society not only builds a tech knowledge dissemination ecosystem online but also brings tech culture into real life through offline social practice activities, enhancing public awareness and community influence.</p>
+      <p class="zh-content">我们的线下活动面向社区成员、普通公众、亲子家庭和城市青年，旨在通过<strong>“体验+传播+共创”</strong>的方式，推动科技认知普及，形成全民科技共识。</p>
+      <p class="en-content">Our offline activities target community members, the general public, families with children, and urban youth, aiming to promote tech awareness through <strong>"experience + dissemination + co-creation"</strong>, forming a universal tech consensus.</p>
+      <p class="zh-content"><strong>二、三大核心目标</strong></p>
+      <p class="en-content"><strong>2. Three Core Objectives</strong></p>
+      <ul class="zh-content">
+        <li>传播科技文化：将深度科技知识以通俗方式带进公众视野，提升全民科技素养</li>
+        <li>践行社会责任：将科技认知与反诈宣传、环保、公益等议题结合，助力建设更安全、更可持续的社会</li>
+        <li>增强社区凝聚力：通过旅行、聚餐、登山等轻松活动，打造有归属感、有温度的社区文化</li>
+      </ul>
+      <ul class="en-content">
+        <li>Disseminate Tech Culture: Bring deep tech knowledge into public view in an accessible way, enhancing universal tech literacy</li>
+        <li>Practice Social Responsibility: Combine tech awareness with anti-fraud propaganda, environmental protection, and public welfare to build a safer, more sustainable society</li>
+        <li>Enhance Community Cohesion: Through relaxed activities like travel, dinners, and hiking, create a sense of belonging and warmth in the community culture</li>
+      </ul>
+      <p class="zh-content"><strong>三、线下活动类型全景</strong></p>
+      <p class="en-content"><strong>3. Overview of Offline Activity Types</strong></p>
+      <p class="zh-content">活动类别  内容示例</p>
+      <p class="en-content">Activity Category  Content Examples</p>
+      <ul class="zh-content">
+        <li>🏛 科技体验类  参观科技馆/博物馆，与讲解员互动、拍摄科普视频，传播科学知识</li>
+        <li>🛡 反诈宣传类  在社区、街区、广场发放宣传册，现场科普诈骗套路，推广反诈App</li>
+        <li>🌱 环保公益类  垃圾分类入户宣讲、绿色低碳骑行日、城市清洁志愿活动</li>
+        <li>💗 慈善行动类  为困境儿童、孤寡老人捐赠图书/物资，陪伴交流、传递科技与关怀并重的社区价值</li>
+        <li>🧗‍♂️ 团队建设类  登山徒步、城市定向、团队旅行、社区聚餐、生日会、家庭日等，增强成员间的归属与信任</li>
+      </ul>
+      <ul class="en-content">
+        <li>🏛 Tech Experience: Visit tech museums/museums, interact with guides, shoot science videos to spread knowledge</li>
+        <li>🛡 Anti-Fraud Propaganda: Distribute brochures in communities, streets, squares; on-site educate on fraud tactics, promote anti-fraud apps</li>
+        <li>🌱 Environmental Public Welfare: Household garbage classification lectures, green low-carbon cycling days, urban cleaning volunteer activities</li>
+        <li>💗 Charity Actions: Donate books/materials to children in need and elderly; accompany and exchange, conveying community values of tech and care</li>
+        <li>🧗‍♂️ Team Building: Hiking, urban orienteering, team travel, community dinners, birthday parties, family days, etc., to enhance belonging and trust among members</li>
+      </ul>
+      <p class="zh-content"><strong>四、成员招募与团队构成</strong></p>
+      <p class="en-content"><strong>4. Member Recruitment and Team Composition</strong></p>
+      <ul class="zh-content">
+        <li>组队形式：每支队伍由本地“种子深科社区团队长”组织，人数建议控制在8–15人，含1名摄影师</li>
+        <li>服装形象：社区统一提供定制棒球帽、T恤，塑造专业公益形象</li>
+        <li>命名建议：可结合本地特色命名，如“深科启秦·咸阳队”、“深科南山·深圳队”</li>
+      </ul>
+      <ul class="en-content">
+        <li>Team Formation: Each team organized by local "Seeds DeepTech Society Team Leader", suggested 8-15 people, including 1 photographer</li>
+        <li>Attire Image: Community uniformly provides custom baseball caps, T-shirts to shape a professional public welfare image</li>
+        <li>Naming Suggestions: Can incorporate local characteristics, such as "DeepTech QiQin·Xianyang Team", "DeepTech Nanshan·Shenzhen Team"</li>
+      </ul>
+      <p class="zh-content"><strong>五、活动准备要点</strong></p>
+      <p class="en-content"><strong>5. Key Points for Activity Preparation</strong></p>
+      <p class="zh-content">✅ 场地对接</p>
+      <p class="en-content">✅ Venue Coordination</p>
+      <p class="zh-content">科技馆、社区活动中心、公园广场、公益机构等</p>
+      <p class="en-content">Tech museums, community activity centers, park squares, public welfare institutions, etc.</p>
+      <p class="zh-content">提前3–5天预约并出示“种子深科社区志愿团队”身份</p>
+      <p class="en-content">Reserve 3-5 days in advance and present "Seeds DeepTech Society Volunteer Team" identity</p>
+      <p class="zh-content">✅ 物资准备</p>
+      <p class="en-content">✅ Material Preparation</p>
+      <p class="zh-content">社区标识物（展板、横幅、打卡板）</p>
+      <p class="en-content">Community identifiers (display boards, banners, check-in boards)</p>
+      <p class="zh-content">宣传资料（科普图文、反诈手册、环保倡议等）</p>
+      <p class="en-content">Promotional materials (science graphics, anti-fraud manuals, environmental initiatives, etc.)</p>
+      <p class="zh-content">拍摄设备、活动登记表、简单急救包</p>
+      <p class="en-content">Shooting equipment, activity registration forms, simple first-aid kits</p>
+      <p class="zh-content"><strong>六、经费与支持</strong></p>
+      <p class="en-content"><strong>6. Funding and Support</strong></p>
+      <p class="zh-content">支出项目  参考标准</p>
+      <p class="en-content">Expense Items  Reference Standards</p>
+      <ul class="zh-content">
+        <li>卓越领队补贴  200元/天</li>
+        <li>成员参与补贴  100元/人/天</li>
+        <li>餐饮与交通补贴  餐补80元，交通40元/人</li>
+        <li>活动物资  社区统一采购或报销</li>
+      </ul>
+      <ul class="en-content">
+        <li>Outstanding Leader Subsidy  200 yuan/day</li>
+        <li>Member Participation Subsidy  100 yuan/person/day</li>
+        <li>Meals and Transportation Subsidy  Meal subsidy 80 yuan, transportation 40 yuan/person</li>
+        <li>Activity Materials  Uniformly purchased or reimbursed by the community</li>
+      </ul>
+      <p class="zh-content">备注：所有费用由社区统一安排，无需成员个人垫付，确保参与者专注活动本身。</p>
+      <p class="en-content">Note: All expenses are uniformly arranged by the community, no need for individual members to advance, ensuring participants focus on the activities themselves.</p>
+      <p class="zh-content"><strong>七、活动成果回报机制</strong></p>
+      <p class="en-content"><strong>7. Activity Outcome Reward Mechanism</strong></p>
+      <p class="zh-content">每次活动需提交：</p>
+      <p class="en-content">Each activity must submit:</p>
+      <ul class="zh-content">
+        <li>活动照片/视频记录（含团队合照）</li>
+        <li>简要活动总结（200字以上）</li>
+        <li>成员感想/现场反馈若干</li>
+      </ul>
+      <ul class="en-content">
+        <li>Activity photos/video records (including team group photos)</li>
+        <li>Brief activity summary (over 200 words)</li>
+        <li>Several member reflections/on-site feedback</li>
+      </ul>
+      <p class="zh-content">材料用于社区平台展示，优秀团队将获得额外奖励与流量扶持</p>
+      <p class="en-content">Materials used for community platform display, outstanding teams will receive additional rewards and traffic support</p>
+      <p class="zh-content"><strong>八、我们的愿景</strong></p>
+      <p class="en-content"><strong>8. Our Vision</strong></p>
+      <p class="zh-content">我们希望通过每一场线下行动，让科技的温度在人与人之间传递，让公益成为连接科技与社会的桥梁，让每位参与者都从中感受到价值、成长和归属。</p>
+      <p class="en-content">We hope that through every offline action, the warmth of tech is passed between people, making public welfare a bridge connecting tech and society, allowing every participant to feel value, growth, and belonging.</p>
+      <p class="zh-content">科技传播不再是专家的专属，而是每一位<strong>“科技志愿者”</strong>的行动。欢迎你加入我们，用一次次走出去的脚步，把科技的种子撒进更多人的生活中。</p>
+      <p class="en-content">Tech dissemination is no longer exclusive to experts, but the action of every <strong>"tech volunteer"</strong>. Welcome to join us, using every step outward to sow the seeds of tech into more people's lives.</p>
+    </div>
+  </div>
+  
+  <div id="modal-team-building" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">团队建设</h2>
+      <h2 class="en-content">Team Building</h2>
+      <p class="zh-content">在种子深科社区，我们始终坚信一件事：科技文化的传播不是一个人完成的任务，而是一群人共同奔赴的事业。这正是我们为什么要大力推进<strong>团队建设</strong>的原因。</p>
+      <p class="en-content">In Seeds DeepTech Society, we always believe one thing: The dissemination of tech culture is not a task completed by one person, but a cause pursued together by a group. This is why we vigorously promote <strong>team building</strong>.</p>
+      <p class="zh-content"><strong>为什么要组建团队？</strong></p>
+      <p class="en-content"><strong>Why Build Teams?</strong></p>
+      <p class="zh-content">每一位加入社区的成员，都可能来自不同的行业、背景、城市。但如果我们彼此只是“线上昵称”，难以共创真正的影响力。而团队的存在，正是把这些<strong>“分散的个体”</strong>连接成<strong>“有方向、有使命感的组织”</strong>的关键。</p>
+      <p class="en-content">Every member joining the community may come from different industries, backgrounds, cities. But if we are just "online nicknames" to each other, it's hard to co-create real influence. The existence of teams is the key to connecting these <strong>"scattered individuals"</strong> into <strong>"organizations with direction and sense of mission"</strong>.</p>
+      <p class="zh-content">我们组建团队，是为了让更多普通人参与到推动科技文化传播、公益活动、知识普及的行动中，也为了打造一种稳定、温暖、有认同感的社群生态。</p>
+      <p class="en-content">We build teams to allow more ordinary people to participate in promoting tech culture dissemination, public welfare activities, and knowledge popularization, and to create a stable, warm, and identity-strong community ecosystem.</p>
+      <p class="zh-content"><strong>组建团队，有什么好处？</strong></p>
+      <p class="en-content"><strong>What Are the Benefits of Building Teams?</strong></p>
+      <ol class="zh-content">
+        <li><strong>更高的协作效率，推动项目落地</strong><br>一个人传播科技文化，可能影响10人；一个团队行动，能影响上百上千人。团队内部分工明确，有队长、有策划、有内容传播者、有活动组织者，能高效执行线下活动、线上分享会、公益路演等任务。</li>
+        <li><strong>成员越多，社区支持越多</strong><br>团队成员人数越多，社区给予的活动经费、技术支持、宣传资源越多。我们将定期评估团队表现，为优秀团队投资建设实体经济项目，如科技咖啡馆、健康馆、品牌周边店等，真正帮助团队实现<strong>“共同创业，共同富裕”</strong>。</li>
+        <li><strong>带队者可获得专属激励</strong><br>成为队长，你不仅可以组织活动、引领方向，还将获得专属的活动补贴、培训资源，乃至社区项目分红权、内部优先投资资格等。表现突出的区域负责人，还可享有管理本地社区的权限与运营分红。</li>
+        <li><strong>增强归属感，形成荣誉体系</strong><br>我们为每支团队定制专属IP、统一服装、线上展示页面，并通过社区评比、排行榜机制、荣誉授勋等方式，构建认同感极强的社群文化。每一次活动、每一条动态，都是你与伙伴共同书写的成长印记。</li>
+        <li><strong>获得更强的社会影响力</strong><br>种子深科社区鼓励团队组织线下公益类活动（反诈宣传、环保行动、科技馆参访、慈善捐赠等），不仅帮助更多人认知科技价值，也让每一支队伍在城市中留下正向影响力，塑造专业、可信、有温度的公共形象。</li>
+      </ol>
+      <ol class="en-content">
+        <li><strong>Higher Collaboration Efficiency, Promoting Project Implementation</strong><br>One person disseminating tech culture may influence 10 people; a team action can influence hundreds or thousands. Clear division of labor in the team, with captains, planners, content disseminators, activity organizers, can efficiently execute offline activities, online sharing sessions, public welfare roadshows, etc.</li>
+        <li><strong>More Members, More Community Support</strong><br>The more team members, the more activity funding, technical support, and promotional resources the community provides. We will regularly evaluate team performance and invest in building physical economic projects for outstanding teams, such as tech cafes, health centers, brand peripheral stores, truly helping teams achieve <strong>"joint entrepreneurship, joint prosperity"</strong>.</li>
+        <li><strong>Leaders Get Exclusive Incentives</strong><br>Becoming a captain, you can not only organize activities and lead directions but also receive exclusive activity subsidies, training resources, and even community project dividends, internal priority investment qualifications, etc. Outstanding regional leaders can also enjoy management permissions for local communities and operational dividends.</li>
+        <li><strong>Enhance Sense of Belonging, Form Honor System</strong><br>We customize exclusive IP, uniform clothing, online display pages for each team, and build a highly identity-strong community culture through community evaluations, leaderboards, honor awarding, etc. Every activity, every dynamic, is a growth mark written together with partners.</li>
+        <li><strong>Gain Stronger Social Influence</strong><br>Seeds DeepTech Society encourages teams to organize offline public welfare activities (anti-fraud propaganda, environmental actions, tech museum visits, charity donations, etc.), not only helping more people recognize tech value but also leaving positive influence in cities, shaping professional, credible, warm public image.</li>
+      </ol>
+      <p class="zh-content">在这里，你不再是独自一人摸索的人，而是一位正在带领社区向前的<strong>“科技文化传播引路人”</strong>。</p>
+      <p class="en-content">Here, you are no longer someone exploring alone, but a <strong>"tech culture dissemination leader"</strong> leading the community forward.</p>
+      <p class="zh-content">我们诚邀你组建自己的社区团队，去带动更多人理解科技、传播知识、参与公益。你播种下的每一份影响力，社区都会全力支持与回馈。</p>
+      <p class="en-content">We sincerely invite you to build your own community team, to drive more people to understand tech, disseminate knowledge, and participate in public welfare. Every influence you sow, the community will fully support and reward.</p>
+    </div>
+  </div>
+  
+  <div id="modal-honor-certification" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">科普传播</h2>
+      <h2 class="en-content">Science Dissemination</h2>
+      <p class="zh-content"><strong>关于我们为何致力于科技文化传播</strong></p>
+      <p class="en-content"><strong>Why We Are Committed to Tech Culture Dissemination</strong></p>
+      <p class="zh-content">作为由新加坡种子资本发起的全球科技文化赋能平台，种子深科社区始终坚持以<strong>“推动全民科技认知”</strong>为核心使命，系统开展线上与线下相结合的科技文化传播工作。我们深知，在一个深度科技迅猛发展的时代，科技知识的普及程度，决定着整个社会的认知水平、抗风险能力与创新土壤。</p>
+      <p class="en-content">As a global tech culture empowerment platform initiated by Singapore Seeds Capital, Seeds DeepTech Society always adheres to the core mission of <strong>"promoting universal tech awareness"</strong>, systematically carrying out online and offline combined tech culture dissemination work. We know that in an era of rapid deep tech development, the popularity of tech knowledge determines the society's cognitive level, risk resistance, and innovation soil.</p>
+      <p class="zh-content">因此，我们不仅仅将<strong>“科技文化传播”</strong>视为一项内容工作，而是视为一项具有战略意义的社会工程，更是一项增强国家软实力、提升全民科技素养、引导公众理性参与技术变革的重要路径。</p>
+      <p class="en-content">Therefore, we not only regard <strong>"tech culture dissemination"</strong> as content work, but as a strategic social engineering, and an important path to enhance national soft power, improve universal tech literacy, and guide the public to rationally participate in technological changes.</p>
+      <p class="zh-content"><strong>📌 对社会的意义：建立全民科技认知防线</strong></p>
+      <p class="en-content"><strong>📌 Significance to Society: Building a Universal Tech Awareness Defense Line</strong></p>
+      <p class="zh-content">在科技飞速迭代的今天，人工智能、生物科技、区块链、量子信息等技术不断走入应用前沿。与此同时，各类技术相关谣言、恐慌与误读也在扩散，部分人群处于<strong>“认知盲区”</strong>。</p>
+      <p class="en-content">In today's rapid tech iteration, technologies like AI, biotech, blockchain, quantum information are entering application frontiers. At the same time, various tech-related rumors, panics, and misinterpretations are spreading, with some people in <strong>"cognitive blind spots"</strong>.</p>
+      <p class="zh-content">通过持续的科技文化传播，我们希望：</p>
+      <p class="en-content">Through continuous tech culture dissemination, we hope:</p>
+      <ul class="zh-content">
+        <li>提升公众对科技的理性认知与判断力</li>
+        <li>强化社会的科技风险意识与信息免疫力</li>
+        <li>建立全民参与科技讨论、监督和创新的社会基础</li>
+      </ul>
+      <ul class="en-content">
+        <li>Enhance the public's rational cognition and judgment of tech</li>
+        <li>Strengthen society's tech risk awareness and information immunity</li>
+        <li>Establish a social foundation for universal participation in tech discussions, supervision, and innovation</li>
+      </ul>
+      <p class="zh-content">科技不应只是专家与机构的专属语言，它必须成为社会大众的基本常识与沟通渠道。</p>
+      <p class="en-content">Tech should not be the exclusive language of experts and institutions; it must become basic common sense and communication channel for the public.</p>
+      <p class="zh-content"><strong>📌 对社区的价值：构建有认同感的知识型社群</strong></p>
+      <p class="en-content"><strong>📌 Value to the Community: Building an Identity-Strong Knowledge-Based Group</strong></p>
+      <p class="zh-content">科技文化传播，是种子深科社区构建组织文化的核心路径之一。</p>
+      <p class="en-content">Tech culture dissemination is one of the core paths for Seeds DeepTech Society to build organizational culture.</p>
+      <p class="zh-content">我们以内容为媒介，以价值观为牵引，通过不断输出深度浅说、贴近生活的科技知识，让社区成员不仅是内容的消费者，更是知识传播的参与者、价值共识的建设者、社群信任的传承者。</p>
+      <p class="en-content">We use content as a medium, values as traction, through continuously outputting deep yet simple, life-close tech knowledge, making community members not only content consumers, but participants in knowledge dissemination, builders of value consensus, and inheritors of community trust.</p>
+      <p class="zh-content">这种传播行为有助于：</p>
+      <p class="en-content">This dissemination behavior helps:</p>
+      <ul class="zh-content">
+        <li>凝聚有科技素养与社会责任意识的核心成员</li>
+        <li>打造去中心化的知识赋能型组织生态</li>
+        <li>扩展社区在产业、教育、公益等多元场景中的社会影响力</li>
+      </ul>
+      <ul class="en-content">
+        <li>Coalesce core members with tech literacy and social responsibility awareness</li>
+        <li>Create a decentralized knowledge-empowering organizational ecosystem</li>
+        <li>Expand the community's social influence in diverse scenarios like industry, education, public welfare</li>
+      </ul>
+      <p class="zh-content"><strong>📌 对公众的意义：让科技从“理解”走向“参与”</strong></p>
+      <p class="en-content"><strong>📌 Significance to the Public: Let Tech Go from "Understanding" to "Participation"</strong></p>
+      <p class="zh-content">科技文化传播，不仅仅是信息的下达，更是公众认知升级的阶梯。</p>
+      <p class="en-content">Tech culture dissemination is not just information delivery, but a ladder for public cognitive upgrade.</p>
+      <p class="zh-content">对普通公众而言，我们所做的是：</p>
+      <p class="en-content">For ordinary public, what we do is:</p>
+      <ul class="zh-content">
+        <li>将复杂科技知识进行大众化、生活化表达</li>
+        <li>通过视频、讲座、互动等形式降低技术门槛</li>
+        <li>让每一个普通人都有机会以传播者身份参与到科技生态中</li>
+      </ul>
+      <ul class="en-content">
+        <li>Popularize and life-ize complex tech knowledge</li>
+        <li>Lower technical thresholds through videos, lectures, interactions, etc.</li>
+        <li>Allow every ordinary person to participate in the tech ecosystem as a disseminator</li>
+      </ul>
+      <p class="zh-content">我们设计了包括知识激励机制、社区传播积分、团队协作奖励等方式，真正实现<strong>“认知可变现、价值可共享”</strong>。公众不再只是旁观者，而是整个科技传播体系的重要一环。</p>
+      <p class="en-content">We designed mechanisms including knowledge incentives, community dissemination points, team collaboration rewards, truly achieving <strong>"cognition monetizable, value shareable"</strong>. The public is no longer just spectators, but an important link in the entire tech dissemination system.</p>
+      <p class="zh-content"><strong>📣 结语</strong></p>
+      <p class="en-content"><strong>📣 Conclusion</strong></p>
+      <p class="zh-content">在种子深科社区看来，科技文化的广泛传播，是推动社会进步的底层驱动力，是提升社区生命力与成员价值的战略资产，也是赋能普通人成为<strong>“科技社会建设者”</strong>的路径通道。</p>
+      <p class="en-content">In the view of Seeds DeepTech Society, the widespread dissemination of tech culture is the underlying driving force for social progress, a strategic asset to enhance community vitality and member value, and a path channel to empower ordinary people to become <strong>"tech society builders"</strong>.</p>
+      <p class="zh-content">未来，我们将持续以专业内容输出为核心，以公益化传播为手段，以社区协同机制为保障，为建设一个全民共享、人人参与的科技文化时代，贡献我们应有的力量。</p>
+      <p class="en-content">In the future, we will continue with professional content output as the core, public welfare dissemination as the means, community collaboration mechanisms as the guarantee, contributing our due strength to build an era of universal sharing and participation in tech culture.</p>
+    </div>
+  </div>
+  
+  <div id="modal-download-guide" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">下载指南</h2>
+      <h2 class="en-content">Download Guide</h2>
+      <p class="zh-content">Seeds Talk 是种子深科社区<strong>官方指定的线上平台</strong>，用于参与签到抽奖、查看科技资讯、参与社群互动等日常社区活动。请根据您的设备类型，选择相应的安装方式：</p>
+      <p class="en-content">Seeds Talk is the <strong>official designated online platform</strong> of the Seeds DeepTech Society, used for participating in check-in lotteries, viewing tech information, engaging in community interactions, and other daily community activities. Please choose the appropriate installation method based on your device type:</p>
+      <p class="zh-content"><strong>📱 安卓用户（Android）</strong></p>
+      <p class="en-content"><strong>📱 Android Users</strong></p>
+      <p class="zh-content"><strong>✅ 下载步骤：</strong></p>
+      <p class="en-content"><strong>✅ Download Steps:</strong></p>
+      <ul class="zh-content">
+        <li>点击<strong>“安卓下载”</strong>按钮，或使用微信/浏览器扫描官方二维码，进入APK下载页面。</li>
+        <li>系统将提示下载APK文件，点击<strong>“确认下载”</strong>。</li>
+        <li>下载完成后，打开文件并选择<strong>“安装”</strong>。</li>
+        <li>安装完成后，点击图标即可启动 Seeds Talk 应用。</li>
+      </ul>
+      <ul class="en-content">
+        <li>Click the <strong>"Android Download"</strong> button, or use WeChat/browser to scan the official QR code to enter the APK download page.</li>
+        <li>The system will prompt to download the APK file, click <strong>"Confirm Download"</strong>.</li>
+        <li>After downloading, open the file and select <strong>"Install"</strong>.</li>
+        <li>After installation, click the icon to launch the Seeds Talk app.</li>
+      </ul>
+      <p class="zh-content"><strong>⚠️ 注意事项：</strong></p>
+      <p class="en-content"><strong>⚠️ Notes:</strong></p>
+      <ul class="zh-content">
+        <li>系统要求：Android 8.0 及以上版本</li>
+        <li>如手机弹出“安装被拦截”提示，请打开<strong>「设置」>「安全」> 启用“允许安装未知来源的应用”</strong></li>
+        <li>或在下载页面选择<strong>“信任此来源”</strong></li>
+      </ul>
+      <ul class="en-content">
+        <li>System Requirements: Android 8.0 and above</li>
+        <li>If the phone prompts "Installation Blocked", please open <strong>"Settings" > "Security" > Enable "Allow Installation of Apps from Unknown Sources"</strong></li>
+        <li>Or select <strong>"Trust This Source"</strong> on the download page</li>
+      </ul>
+      <p class="zh-content"><strong>🍎 苹果用户（iOS）</strong></p>
+      <p class="en-content"><strong>🍎 iOS Users</strong></p>
+      <p class="zh-content">由于Apple App Store审核流程尚未完成，目前使用 <strong>TestFlight 测试通道</strong>安装。</p>
+      <p class="en-content">Due to the Apple App Store review process not yet completed, currently using the <strong>TestFlight test channel</strong> for installation.</p>
+      <p class="zh-content"><strong>✅ 下载步骤：</strong></p>
+      <p class="en-content"><strong>✅ Download Steps:</strong></p>
+      <ul class="zh-content">
+        <li>前往 App Store 下载并安装 <strong>TestFlight</strong>（苹果官方测试工具）。</li>
+        <li>安装后，返回下载页面，点击<strong>“在TestFlight中查看”</strong>。</li>
+        <li>TestFlight 会自动弹出 Seeds Talk 测试版本，点击<strong>“安装”</strong>即可。</li>
+      </ul>
+      <ul class="en-content">
+        <li>Go to App Store to download and install <strong>TestFlight</strong> (Apple's official testing tool).</li>
+        <li>After installation, return to the download page and click <strong>"View in TestFlight"</strong>.</li>
+        <li>TestFlight will automatically pop up the Seeds Talk test version, click <strong>"Install"</strong>.</li>
+      </ul>
+      <p class="zh-content"><strong>⚠️ 注意事项：</strong></p>
+      <p class="en-content"><strong>⚠️ Notes:</strong></p>
+      <ul class="zh-content">
+        <li>系统要求：iOS 14.0 及以上版本</li>
+        <li>如果出现“需要输入兑换码”提示，请退出Testflight，重新在下载页面点击<strong>“在TestFlight中查看”</strong>。</li>
+      </ul>
+      <ul class="en-content">
+        <li>System Requirements: iOS 14.0 and above</li>
+        <li>If "Need to Enter Redemption Code" prompt appears, exit TestFlight and click <strong>"View in TestFlight"</strong> again on the download page.</li>
+      </ul>
+      <p class="zh-content"><strong>🛠 常见问题与解答（FAQ）</strong></p>
+      <p class="en-content"><strong>🛠 Common Issues and Solutions (FAQ)</strong></p>
+      <p class="zh-content">Q1：为什么安卓安装时提示“存在风险”或“未知来源”？</p>
+      <p class="en-content">Q1: Why does Android installation prompt "Risk Exists" or "Unknown Source"?</p>
+      <p class="zh-content">A1：因APK为非商店应用，部分手机默认屏蔽。请在<strong>“设置 > 安全 > 安装未知来源应用”</strong>中启用权限，确保文件来源为社区官方渠道。</p>
+      <p class="en-content">A1: Because APK is a non-store app, some phones block by default. Enable permissions in <strong>"Settings > Security > Install Unknown Source Apps"</strong>, ensure file source is official community channel.</p>
+      <p class="zh-content">Q2：TestFlight链接打不开怎么办？</p>
+      <p class="en-content">Q2: What if TestFlight link doesn't open?</p>
+      <p class="zh-content">A2：请确认手机中已安装 TestFlight 且使用 Safari 浏览器打开链接。建议使用原相机进行二维码扫码或点击官方链接，不要在微信中直接打开。</p>
+      <p class="en-content">A2: Confirm TestFlight is installed on the phone and use Safari browser to open the link. Recommend using the original camera for QR code scanning or clicking the official link, do not open directly in WeChat.</p>
+      <p class="zh-content">Q3：安装后应用无法正常运行怎么办？</p>
+      <p class="en-content">Q3: What if the app doesn't run normally after installation?</p>
+      <p class="zh-content">A3：检查系统版本是否满足最低要求（Android 8.0 / iOS 14.0）；清理后台后重启应用；仍有问题请联系 Seeds Talk 技术支持</p>
+      <p class="en-content">A3: Check if the system version meets the minimum requirements (Android 8.0 / iOS 14.0); Clear background and restart the app; If still problematic, contact Seeds Talk technical support</p>
+      <p class="zh-content">Q4：在哪里获取最新下载二维码或链接？</p>
+      <p class="en-content">Q4: Where to get the latest download QR code or link?</p>
+      <p class="zh-content">A4：请前往种子深科社区下载官网www.seedstalk.cc、官方社群或联系您的团队长，获取最新可用下载链接及二维码。</p>
+      <p class="en-content">A4: Please go to the Seeds DeepTech Society download official website www.seedstalk.cc, official community, or contact your team leader to get the latest available download links and QR codes.</p>
+      <p class="zh-content">如您在安装过程中遇到任何问题，可随时联系 Seeds Talk 社区客服，我们将第一时间为您提供协助。欢迎开启您的<strong>科技文化传播之旅</strong>！</p>
+      <p class="en-content">If you encounter any issues during installation, feel free to contact Seeds Talk community customer service at any time, we will provide assistance as soon as possible. Welcome to start your <strong>tech culture dissemination journey</strong>!</p>
+    </div>
+  </div>
+  
+  <div id="modal-faq" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">常见问题</h2>
+      <h2 class="en-content">FAQ</h2>
+      <p class="zh-content"><strong>Q1: Seeds Talk 是免费使用的吗？</strong></p>
+      <p class="en-content"><strong>Q1: Is Seeds Talk free to use?</strong></p>
+      <p class="zh-content">A: 是的，Seeds Talk 完全免费提供下载和使用，无需支付任何费用，也没有任何隐藏收费。</p>
+      <p class="en-content">A: Yes, Seeds Talk is completely free to download and use, with no hidden fees.</p>
+      <p class="zh-content"><strong>Q2: 如何创建团队？</strong></p>
+      <p class="en-content"><strong>Q2: How to create a team?</strong></p>
+      <p class="zh-content">A: 当您的朋友通过您的邀请码注册成功后，系统会自动将其归属到您的团队中。您可在<strong>「我的」页面的「成员列表」</strong>中查看和管理团队成员。</p>
+      <p class="en-content">A: When your friends register successfully through your invitation code, the system will automatically assign them to your team. You can view and manage team members in the <strong>"My" page's "Member List"</strong>.</p>
+      <p class="zh-content"><strong>Q3: 如何兑换元气卡？</strong></p>
+      <p class="en-content"><strong>Q3: How to redeem vitality cards?</strong></p>
+      <p class="zh-content">A: 进入<strong>「社区」页面的「抽奖」专区</strong>，集齐指定卡片系列后点击“合成”，可获得元气卡。再到<strong>「商城」专区</strong>用元气卡兑换奖励。</p>
+      <p class="en-content">A: Enter the <strong>"Community" page's "Lottery" section</strong>, collect the specified card series and click "Synthesize" to get vitality cards. Then go to the <strong>"Mall" section</strong> to redeem rewards with vitality cards.</p>
+      <p class="zh-content"><strong>Q4: 我是普通人，也能参与传播科技文化吗？</strong></p>
+      <p class="en-content"><strong>Q4: As an ordinary person, can I participate in spreading tech culture?</strong></p>
+      <p class="zh-content">A: 当然可以！我们准备了简单易懂的内容，包括健康科普、前沿科技、生活知识等，只需<strong>转发、分享、邀请朋友注册</strong>即可传播科技知识。你所做的每一个动作，社区都会给予奖励和认可。</p>
+      <p class="en-content">A: Of course! We have prepared easy-to-understand content, including health science, cutting-edge tech, life knowledge, etc. Just <strong>forward, share, invite friends to register</strong> to spread tech knowledge. Every action you take, the community will reward and recognize.</p>
+      <p class="zh-content"><strong>Q5: 社区是不是传销？要不要交钱？</strong></p>
+      <p class="en-content"><strong>Q5: Is the community a pyramid scheme? Do I need to pay money?</strong></p>
+      <p class="zh-content">A: 完全不是。我们不卖产品、不收会费、不靠拉人头赚钱。我们是由新加坡政府支持、Seeds Capital 投资的<strong>正规科技文化社区</strong>，靠传播科技知识和推动科技项目合作获得收入，真正做有社会意义的事。</p>
+      <p class="en-content">A: Absolutely not. We don't sell products, don't charge membership fees, don't make money by pulling heads. We are a <strong>legitimate tech culture community</strong> supported by the Singapore government and invested by Seeds Capital, earning income by spreading tech knowledge and promoting tech project cooperation, truly doing socially meaningful things.</p>
+      <p class="zh-content"><strong>Q6: 社区的资金从哪来？</strong></p>
+      <p class="en-content"><strong>Q6: Where does the community's funding come from?</strong></p>
+      <p class="zh-content">A: 社区资金主要来自 Seeds Capital 的投资收益。该机构专注投资全球高潜力科技企业，部分利润反哺到社区文化建设中。同时，社区通过举办科技发布会、产学研合作、内容服务等方式获得收入，形成<strong>“影响力反哺商业”</strong>的健康模式。</p>
+      <p class="en-content">A: Community funds mainly come from Seeds Capital's investment returns. The institution focuses on investing in global high-potential tech enterprises, with part of the profits fed back into community cultural construction. At the same time, the community earns income through holding tech conferences, industry-academia-research cooperation, content services, etc., forming a healthy model of <strong>"influence feeding back business"</strong>.</p>
+      <p class="zh-content"><strong>Q7: 什么是社区内部项目？它们从哪来？</strong></p>
+      <p class="en-content"><strong>Q7: What are community internal projects? Where do they come from?</strong></p>
+      <p class="zh-content">A: 社区内部项目是由 Seeds Capital 的专业项目团队发掘的全球前沿科技项目，普通大众难以接触。项目涵盖：<strong>新能源与电池技术</strong>（如光伏、固态电池）；<strong>具身智能与智能制造</strong>；<strong>医疗AI与远程手术机器人</strong>；<strong>基因疗法与智慧农业</strong>。这些项目都处于科技爆发前夜，成长潜力大，投资逻辑稳健，并符合国家重点发展方向。</p>
+      <p class="en-content">A: Community internal projects are global cutting-edge tech projects discovered by Seeds Capital's professional project team, hard for ordinary people to access. Projects cover: <strong>new energy and battery technology</strong> (such as photovoltaics, solid-state batteries); <strong>embodied intelligence and smart manufacturing</strong>; <strong>medical AI and remote surgical robots</strong>; <strong>gene therapy and smart agriculture</strong>. These projects are on the eve of tech explosion, with great growth potential, stable investment logic, and in line with national key development directions.</p>
+      <p class="zh-content"><strong>Q8: 怎么参与社区的内部项目？</strong></p>
+      <p class="en-content"><strong>Q8: How to participate in community internal projects?</strong></p>
+      <p class="zh-content">A: 内部项目不对外开放投递，需要提前准备：成为<strong>实名认证会员</strong>；深度参与社区文化传播与内容推广；组建或加入高质量的社区团队。Seeds Capital 会根据你的活跃度、影响力优先通知内部项目机会。项目周期通常为1-3年，回报稳定，收益按任务完成及团队贡献分配。</p>
+      <p class="en-content">A: Internal projects are not open for external submission, need to prepare in advance: Become a <strong>real-name authenticated member</strong>; Deeply participate in community cultural dissemination and content promotion; Build or join high-quality community teams. Seeds Capital will prioritize notifying internal project opportunities based on your activity and influence. Project cycles are usually 1-3 years, with stable returns, benefits distributed according to task completion and team contribution.</p>
+      <p class="zh-content"><strong>Q9: 参与社区有什么实际好处？</strong></p>
+      <p class="en-content"><strong>Q9: What are the practical benefits of participating in the community?</strong></p>
+      <p class="zh-content">A: 每天看文章/视频就能领奖励；分享内容/邀请朋友有现金补贴；可兑换实物奖品、元气卡、专属荣誉；有机会加入前沿科技项目，长期获得收益；与全球高质量人才共同成长。</p>
+      <p class="en-content">A: Daily reading articles/videos to receive rewards; Sharing content/inviting friends for cash subsidies; Redeemable for physical prizes, vitality cards, exclusive honors; Opportunity to join cutting-edge tech projects for long-term benefits; Grow together with global high-quality talents.</p>
+    </div>
+  </div>
+  
+  <div id="modal-usage-tutorial" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">使用教程</h2>
+      <h2 class="en-content">Usage Tutorial</h2>
+      </ul>
+      <p class="zh-content"><strong>视频教程：</strong></p>
+      <p class="en-content"><strong>Video Tutorials:</strong></p>
+      <ul class="zh-content">
+        <li><strong>华为手机下载安装教程视频：</strong> <a href="https://streamable.com/zbsbg5" target="_blank">观看</a></li>
+        <li><strong>小米手机下载安装教程视频：</strong> <a href="https://streamable.com/00q46s" target="_blank">观看</a></li>
+        <li><strong>苹果手机企业签下载安装教程视频：</strong> <a href="https://streamable.com/y67eb9" target="_blank">观看</a></li>
+      </ul>
+      <ul class="en-content">
+        <li><strong>Huawei Phone Download and Installation Tutorial Video:</strong> <a href="https://streamable.com/zbsbg5" target="_blank">Watch</a></li>
+        <li><strong>Xiaomi Phone Download and Installation Tutorial Video:</strong> <a href="https://streamable.com/00q46s" target="_blank">Watch</a></li>
+        <li><strong>Apple Phone Enterprise Signature Download and Installation Tutorial Video:</strong> <a href="https://streamable.com/y67eb9" target="_blank">Watch</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div id="modal-security-guarantee" class="modal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <h2 class="zh-content">安全保障</h2>
+      <h2 class="en-content">Security Guarantee</h2>
+      <p class="zh-content"><strong>Seeds Talk 安全保障体系</strong></p>
+      <p class="en-content"><strong>Seeds Talk Security Assurance System</strong></p>
+      <p class="zh-content">Seeds Talk 采用多重安全措施保护用户数据和资金安全：</p>
+      <p class="en-content">Seeds Talk employs multiple security measures to protect user data and funds:</p>
+      <p class="zh-content"><strong>1. 传输与存储安全</strong></p>
+      <p class="en-content"><strong>1. Transmission and Storage Security</strong></p>
+      <p class="zh-content">全平台采用 <strong>TLS 1.2 / TLS 1.3</strong> 加密传输协议，确保客户端与服务器之间通信安全不被窃听、篡改。</p>
+      <p class="en-content">The entire platform uses <strong>TLS 1.2 / TLS 1.3</strong> encryption transmission protocols to ensure secure communication between client and server without eavesdropping or tampering.</p>
+      <p class="zh-content">用户敏感数据（如手机号、头像、邀请码绑定等）均存储于加密数据库，并通过定期 <strong>渗透测试</strong> 和 <strong>漏洞扫描</strong> 进行风险防控。</p>
+      <p class="en-content">User sensitive data (such as phone number, avatar, invitation code binding, etc.) are stored in encrypted databases, with risk prevention through regular <strong>penetration testing</strong> and <strong>vulnerability scanning</strong>.</p>
+      <p class="zh-content"><strong>2. 身份与访问管控</strong></p>
+      <p class="en-content"><strong>2. Identity and Access Control</strong></p>
+      <p class="zh-content">后端系统引入 <strong>零信任访问架构（Zero-Trust Architecture）</strong>，所有请求需进行多因素认证（MFA）和设备指纹验证，确保最小权限原则执行。</p>
+      <p class="en-content">The backend system introduces <strong>Zero-Trust Architecture</strong>, all requests require multi-factor authentication (MFA) and device fingerprint verification to ensure the principle of least privilege.</p>
+      <p class="zh-content">系统支持设备绑定，避免恶意账号冒用风险。</p>
+      <p class="en-content">The system supports device binding to avoid risks of malicious account impersonation.</p>
+      <p class="zh-content"><strong>3. 隐私合规认证</strong></p>
+      <p class="en-content"><strong>3. Privacy Compliance Certification</strong></p>
+      <p class="zh-content">已获得由新加坡信息通信媒体发展局（IMDA）颁发的 <strong>Data Protection Trustmark (DPTM) SS 714:2025</strong> 认证。该认证向用户表明我们的数据保护措施通过第三方严格评估，符合新加坡个人数据保护法（PDPA）和 APEC CBPR/PRP 标准 </p>
+      <p class="en-content">Obtained the <strong>Data Protection Trustmark (DPTM) SS 714:2025</strong> certification issued by Singapore's Infocomm Media Development Authority (IMDA). This certification indicates to users that our data protection measures have passed strict third-party assessments, complying with Singapore's Personal Data Protection Act (PDPA) and APEC CBPR/PRP standards.</p>
+      <p class="zh-content"><strong>4. 专业团队与持续培训</strong></p>
+      <p class="en-content"><strong>4. Professional Team and Continuous Training</strong></p>
+      <p class="zh-content">成立专职数据保护团队，团队负责人拥有 <strong>PDPC‑IAPP Practitioner</strong> 认证。依托新加坡数据保护委员会（PDPC）主办的培训，每年定期复训。</p>
+      <p class="en-content">Established a dedicated data protection team, with the team leader holding <strong>PDPC‑IAPP Practitioner</strong> certification. Relying on training hosted by Singapore's Personal Data Protection Commission (PDPC), annual regular retraining.</p>
+      <p class="zh-content">所有相关岗位人员均完成隐私政策、数据泄露应急、国际标准实操等课程。</p>
+      <p class="en-content">All relevant position personnel have completed courses on privacy policies, data breach emergencies, international standard practices, etc.</p>
+      <p class="zh-content"><strong>5. 第三方审计与标准体系</strong></p>
+      <p class="en-content"><strong>5. Third-Party Audit and Standard System</strong></p>
+      <p class="zh-content">合规组织 <strong>ISO/IEC 27001</strong> 信息安全管理体系，并结合 <strong>ISO/IEC 27701</strong> 隐私信息管理，共建标准化流程。</p>
+      <p class="en-content">Compliant with <strong>ISO/IEC 27001</strong> information security management system, combined with <strong>ISO/IEC 27701</strong> privacy information management, to build standardized processes.</p>
+      <p class="zh-content"><strong>TÜV SÜD</strong> 年度外部审计保障控制机制的执行效果并出具整改建议</p>
+      <p class="en-content"><strong>TÜV SÜD</strong> annual external audits ensure the effectiveness of control mechanisms and issue improvement suggestions.</p>
+    </div>
+  </div>
 
   <!-- 轮播JS -->
   <script>
@@ -664,6 +2193,7 @@
     ];
     let carouselIndex = 0;
     let carouselTimer = null;
+    
     function updateCarousel(index) {
       const img = document.getElementById('carousel-img');
       if (!img) return;
@@ -672,6 +2202,7 @@
         img.src = carouselImages[index];
         img.style.opacity = 1;
       }, 180);
+      
       const dots = document.getElementById('carousel-dots');
       dots.innerHTML = "";
       carouselImages.forEach((_, i) => {
@@ -681,25 +2212,209 @@
         dots.appendChild(dot);
       });
     }
+    
     function slideCarousel(dir) {
       carouselIndex = (carouselIndex + dir + carouselImages.length) % carouselImages.length;
       updateCarousel(carouselIndex);
       resetCarouselTimer();
     }
+    
     function setCarousel(idx) {
       carouselIndex = idx;
       updateCarousel(carouselIndex);
       resetCarouselTimer();
     }
+    
     function resetCarouselTimer() {
       if (carouselTimer) clearInterval(carouselTimer);
       carouselTimer = setInterval(() => { slideCarousel(1); }, 3800);
     }
+    
+    // 添加悬停暂停功能
+    const carouselBox = document.querySelector('.carousel-box');
+    carouselBox.addEventListener('mouseenter', () => {
+      if (carouselTimer) clearInterval(carouselTimer);
+    });
+    
+    carouselBox.addEventListener('mouseleave', resetCarouselTimer);
+    
     document.addEventListener("DOMContentLoaded", function() {
       updateCarousel(carouselIndex);
       resetCarouselTimer();
     });
   </script>
+  
+  <!-- 粒子动画 -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 140 },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { 
+          value: 0.7,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 1.2,
+            opacity_min: 0.3,
+            sync: false
+          }
+        },
+        size: { 
+          value: 5,
+          random: true,
+          anim: {
+            enable: true,
+            speed: 2.5,
+            size_min: 0.8,
+            sync: false
+          }
+        },
+        line_linked: {
+          enable: true,
+          distance: 160,
+          color: "#ffffff",
+          opacity: 0.35,
+          width: 1.2
+        },
+        move: {
+          enable: true,
+          speed: 2.5,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          grab: { distance: 180, line_linked: { opacity: 0.95 } },
+          push: { particles_nb: 8 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+  
+  <!-- 滚动动画 和 Modal JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('section');
+      const infoBlocks = document.querySelectorAll('.info-block');
+      const navbar = document.querySelector('.navbar');
+      
+      // 滚动时导航栏变化
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+      
+      // 导航栏滚动效果
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetSection = document.getElementById(targetId);
+          
+          if (targetSection) {
+            window.scrollTo({
+              top: targetSection.offsetTop - 80,
+              behavior: 'smooth'
+            });
+            
+           // 更新活动链接
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+          }
+        });
+      });
+      
+      // 移动端菜单切换
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const navLinks = document.getElementById('navLinks');
+      
+      if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', () => {
+          navLinks.classList.toggle('active');
+        });
+      }
+      
+      // Language toggle
+      const languageToggle = document.getElementById('languageToggle');
+      languageToggle.addEventListener('click', () => {
+        const body = document.body;
+        if (body.lang === 'zh-CN') {
+          body.lang = 'en';
+        } else {
+          body.lang = 'zh-CN';
+        }
+      });
+      
+      // 滚动显示动画
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section-in-view');
+          }
+        });
+      }, {
+        threshold: 0.15
+      });
+      
+      const blockObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      }, {
+        threshold: 0.15
+      });
+      
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+      
+      infoBlocks.forEach(block => {
+        blockObserver.observe(block);
+      });
+
+      // Modal functions
+      window.showModal = function(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+        document.body.classList.add('no-scroll');
+      };
+
+      const closes = document.querySelectorAll('.close');
+      closes.forEach(close => {
+        close.addEventListener('click', () => {
+          close.closest('.modal').style.display = 'none';
+          document.body.classList.remove('no-scroll');
+        });
+      });
+
+      window.addEventListener('click', (event) => {
+        if (event.target.classList.contains('modal')) {
+          event.target.style.display = 'none';
+          document.body.classList.remove('no-scroll');
+        }
+      });
+    });
+  </script>
+  
+  <!-- 美洽客服 -->
   <script type='text/javascript'>
     (function(a, b, c, d, e, j, s) {
         a[d] = a[d] || function() {
@@ -746,45 +2461,6 @@
     }
     let meiqiaBtnTimer = setInterval(onlyShowMeiqiaBtn, 400);
     window.addEventListener('beforeunload', ()=>{ clearInterval(meiqiaBtnTimer); });
-  </script>
-  <script>
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 60 },
-        color: { value: "#ffffff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5 },
-        size: { value: 3 },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#ffffff",
-          opacity: 0.4,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 1.5,
-          direction: "none",
-          random: false,
-          straight: false,
-          out_mode: "out"
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "grab" },
-          onclick: { enable: true, mode: "push" },
-          resize: true
-        },
-        modes: {
-          grab: { distance: 140, line_linked: { opacity: 0.5 } },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
   </script>
 </body>
 </html>
