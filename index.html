@@ -3,207 +3,204 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>中国华夏联盟</title>
-  <meta name="description" content="中国华夏联盟APP下载官网——简洁高端，权威发布。支持 iOS 与 Android 下载。" />
-  <meta name="theme-color" content="#C79A3D" />
+  <title>中国华夏联盟 · 官方下载与介绍</title>
+  <meta name="description" content="中国华夏联盟 APP 官方下载站。提供 iOS 与 Android 安装，聚合组织使命、实力与文化，采用简洁高端的现代设计。" />
+  <meta name="theme-color" content="#0B0F1A" />
+  <meta property="og:title" content="中国华夏联盟 · 官方下载" />
+  <meta property="og:description" content="权威发布 · 简洁高端 · 支持 iOS 与 Android 下载" />
+  <meta property="og:type" content="website" />
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
+    /* =====================
+       基础设计系统（暗金×深蓝）
+       ===================== */
     :root{
-      --bg: #ffffff;
-      --card: #f7f7f8;
-      --text: #0f172a;
-      --muted: #4b5563;
-      --line: #e6e6e8;
-      --brand: #C79A3D;
-      --brand-2:#1e293b;
-      --grad-1:#fff;
-      --grad-2:#fafafa;
+      --bg: #0A0E17;         /* 背景深蓝 */
+      --panel: #0F1625;      /* 面板深蓝 */
+      --elev: #141C2E;       /* 提升层 */
+      --text: #E6EAF2;       /* 主文字 */
+      --muted: #94A3B8;      /* 次级文字 */
+      --line: #1F2A44;       /* 边框 */
+      --brand: #C9A04C;      /* 品牌金 */
+      --brand-2: #88B7FF;    /* 品牌辅助蓝 */
+      --success: #10B981;
+      --danger: #EF4444;
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --shadow-lg: 0 30px 60px rgba(0,0,0,.40), inset 0 1px 0 rgba(255,255,255,.02);
+      --shadow-md: 0 18px 40px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.02);
+      --shadow-sm: 0 10px 24px rgba(0,0,0,.22);
+      --container: 1200px;
     }
-    @media (prefers-color-scheme: dark){
+    @media (prefers-color-scheme: light){
       :root{
-        --bg:#0b0f1a;
-        --card:#111827;
-        --text:#f8fafc;
-        --muted:#94a3b8;
-        --line:#1f2937;
-        --grad-1:#0b0f1a;
-        --grad-2:#0f172a;
+        --bg: #F7F7FA;
+        --panel: #FFFFFF;
+        --elev: #FFFFFF;
+        --text: #0F172A;
+        --muted: #475569;
+        --line: #E6E8EF;
+        --shadow-lg: 0 30px 60px rgba(16,24,40,.08);
+        --shadow-md: 0 18px 40px rgba(16,24,40,.06);
+        --shadow-sm: 0 10px 24px rgba(16,24,40,.06);
       }
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:'Noto Sans SC',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    .nav{position:sticky;top:0;background:color-mix(in oklab, var(--bg) 90%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:100}
-    .nav.scrolled{box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    .nav .wrap{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:12px 20px}
-    .brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}
-    .brand img{width:34px;height:34px}
-    .brand span{font-weight:700}
-    .menu{display:flex;gap:18px;align-items:center}
-    .menu a{position:relative;text-decoration:none;color:var(--muted);font-size:14px;padding:8px 6px;border-radius:10px}
-    .menu a:hover{color:var(--text);background:color-mix(in oklab, var(--card) 70%, transparent)}
-    .menu a.active{color:var(--text)}
-    .menu a.active::after{content:"";position:absolute;left:10px;right:10px;bottom:2px;height:2px;background:var(--brand);border-radius:2px}
-    .toggle{border:1px solid var(--line);background:var(--card);padding:6px 10px;border-radius:12px;cursor:pointer;font-size:12px}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,'Noto Sans SC',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; line-height:1.6}
 
-    .hero{padding:86px 20px 64px;text-align:center;position:relative;background:linear-gradient(180deg,var(--grad-1),var(--grad-2))}
-    .hero h1{font-size:34px;margin:10px 0}
-    .hero p{color:var(--muted);margin:0}
+    .container{max-width:var(--container);margin:auto;padding:0 24px}
 
-    /* 下载区优化 */
-    .download { margin-top: 20px; }
-    .cta {
-      margin: 28px 0 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-    .cta .store{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 14px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:var(--bg);
-      text-decoration:none;
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
-    }
-    .cta .store:hover{
-      transform:translateY(-2px);
-      box-shadow:0 10px 24px rgba(0,0,0,.10);
-      border-color:color-mix(in oklab, var(--brand) 45%, var(--line));
-      background:color-mix(in oklab, var(--card) 60%, transparent);
-    }
-    .cta .store img{height:40px;display:block}
-    @media (max-width:640px){ .cta .store img{ height:38px } }
+    /* =====================
+       顶部导航
+       ===================== */
+    .nav{position:sticky;top:0;z-index:80;backdrop-filter: blur(10px);background: color-mix(in oklab, var(--bg) 75%, transparent); border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .brand img{width:32px;height:32px;border-radius:10px}
+    .brand span{font-weight:800;letter-spacing:.2px}
+    .menu{display:flex;gap:10px;align-items:center}
+    .menu a{padding:8px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-size:14px;border:1px solid transparent}
+    .menu a:hover{color:var(--text);border-color:var(--line);background: color-mix(in oklab, var(--panel) 70%, transparent)}
+    .menu a.active{color:var(--text);border-color: color-mix(in oklab, var(--brand) 50%, var(--line))}
+    .toggle{border:1px solid var(--line);background:var(--panel);padding:8px 12px;border-radius:999px;cursor:pointer;font-size:13px;color:var(--text)}
 
-    .cta-note{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:6px;
-      font-size:14px;
-      color:var(--muted);
-    }
-    .cta-note .tag{
-      font-size:12px;
-      line-height:1;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:var(--card);
-      color:var(--text);
-      font-weight:600;
-      letter-spacing:.2px;
-    }
-    .cta-note .tag.ios{ background: color-mix(in oklab, #000 8%, var(--card)); }
-    .cta-note .tag.android{ background: color-mix(in oklab, #10b981 18%, var(--card)); }
-    .cta-note .sep{ opacity:.4 }
+    /* =====================
+       英雄区（高端渐变 + 玻璃卡）
+       ===================== */
+    .hero{position:relative;overflow:hidden}
+    .hero::before{content:"";position:absolute;inset:-10% -10% auto -10%;height:560px;background:radial-gradient(1200px 560px at 20% -10%, color-mix(in oklab, var(--brand) 35%, transparent), transparent 65%), radial-gradient(1000px 480px at 90% 10%, color-mix(in oklab, var(--brand-2) 30%, transparent), transparent 60%);filter:blur(24px);opacity:.55;pointer-events:none}
+    .hero .container{padding:86px 24px 48px}
+    .hero-card{position:relative;background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 80%, transparent), color-mix(in oklab, var(--elev) 90%, transparent)); border:1px solid var(--line);box-shadow:var(--shadow-lg);border-radius: clamp(16px, 3vw, 28px);padding: clamp(22px, 5vw, 40px);text-align:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background: color-mix(in oklab, var(--panel) 70%, transparent);color:var(--muted);font-size:12px}
+    .hero h1{font-size: clamp(28px, 5vw, 44px);margin:14px 0 8px;letter-spacing:.2px}
+    .hero p.sub{color:var(--muted);max-width: 760px;margin: 0 auto}
 
-    .qr-section{display:flex;flex-wrap:wrap;justify-content:center;gap:40px;margin-top:10px}
-    .qr-box{text-align:center;transition:transform .25s ease, box-shadow .25s ease}
-    .qr-box:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.08)}
-    .qr{width:180px;height:180px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
-    .qr-label{margin-top:12px}
-    .qr-label img{height:32px;opacity:.9}
+    .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:28px 0 12px}
+    .store{display:inline-flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 82%, transparent), color-mix(in oklab, var(--panel) 60%, transparent)); box-shadow: var(--shadow-sm); text-decoration:none;transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+    .store:hover{transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: color-mix(in oklab, var(--brand) 46%, var(--line))}
+    .store img{height:42px;display:block}
+    .cta-note{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;color:var(--muted);font-size:14px}
+    .cta-note .tag{padding:6px 10px;border-radius:999px;border:1px solid var(--line);background: color-mix(in oklab, var(--panel) 70%, transparent);color:var(--text);font-weight:600;font-size:12px}
 
-    section{padding:64px 20px}
-    .wrap{max-width:1200px;margin:auto}
-    .section-title{text-align:center;font-size:26px;margin-bottom:10px}
-    .section-desc{text-align:center;font-size:16px;color:var(--muted);max-width:760px;margin:0 auto 34px}
+    .qr-wrap{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:20px;justify-content:center;max-width:520px;margin: 8px auto 0}
+    .qr-card{background:linear-gradient(180deg, color-mix(in oklab, var(--elev) 86%, transparent), color-mix(in oklab, var(--panel) 90%, transparent)); border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px;text-align:center;box-shadow:var(--shadow-sm);transition:transform .25s ease, box-shadow .25s ease}
+    .qr-card:hover{transform: translateY(-4px); box-shadow: var(--shadow-md)}
+    .qr{width:180px;height:180px;border-radius:12px;border:1px solid var(--line);background:#fff;display:block;margin: 0 auto}
+    .qr-lab{margin-top:12px;opacity:.9}
+    .qr-lab img{height:30px}
 
-    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
-    .card{background:var(--card);padding:22px;border:1px solid var(--line);border-radius:16px;transition:transform .25s ease, box-shadow .25s ease, border-color .2s}
-    .card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(0,0,0,.10);border-color:color-mix(in oklab, var(--brand) 40%, var(--line))}
-    .card h3{margin:8px 0;font-size:18px}
-    .card p{margin:0;font-size:14px;color:var(--muted)}
+    /* =====================
+       通用分区
+       ===================== */
+    section{padding: clamp(54px, 10vw, 84px) 0}
+    .section-head{text-align:center;margin-bottom: 24px}
+    .section-title{font-size: clamp(22px, 3.8vw, 32px);margin:0}
+    .section-desc{color:var(--muted);max-width:760px;margin:10px auto 0}
 
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;text-align:center}
-    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
-    .stat .num{font-size:36px;color:var(--brand);font-weight:800}
-    .stat .lab{font-size:14px;color:var(--muted);margin-top:6px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width: 960px){ .grid-3{grid-template-columns:1fr 1fr} }
+    @media (max-width: 640px){ .grid-3{grid-template-columns:1fr} }
 
-    .dock{position:fixed;right:16px;bottom:16px;display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+    .card{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), color-mix(in oklab, var(--elev) 88%, transparent)); border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);transition: transform .25s ease, box-shadow .25s ease, border-color .2s}
+    .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color: color-mix(in oklab, var(--brand) 36%, var(--line))}
+    .card h3{margin:8px 0 6px;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    /* 关键数据 Stats */
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media (max-width: 860px){ .stats{grid-template-columns:1fr 1fr} }
+    @media (max-width: 520px){ .stats{grid-template-columns:1fr} }
+    .stat{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 92%, transparent), color-mix(in oklab, var(--elev) 86%, transparent)); border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;text-align:center}
+    .stat .num{font-size: clamp(28px, 4.6vw, 40px);font-weight:800;letter-spacing:.2px;background: linear-gradient(90deg, var(--brand), color-mix(in oklab, var(--brand-2) 55%, var(--brand))); -webkit-background-clip: text; background-clip: text; color: transparent}
+    .stat .lab{color:var(--muted);font-size:14px;margin-top:6px}
+
+    /* 底部浮窗 Dock */
+    .dock{position:fixed;right:16px;bottom:16px;display:flex;gap:10px;align-items:center;background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 92%, transparent), color-mix(in oklab, var(--panel) 70%, transparent)); border:1px solid var(--line);border-radius:16px;padding:10px 12px;box-shadow: var(--shadow-md)}
     .dock a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid var(--line);padding:8px 10px;border-radius:12px;color:var(--text);font-size:13px}
-    .dock a:hover{border-color:var(--brand)}
+    .dock a:hover{border-color: var(--brand)}
 
-    footer{border-top:1px solid var(--line);padding:24px 20px;color:var(--muted)}
-    footer .wrap{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center}
-    .foot-left{display:flex;align-items:center;gap:10px}
-    .backtop{margin-left:auto;border:1px solid var(--line);background:var(--card);padding:8px 12px;border-radius:12px;cursor:pointer}
+    /* 页脚 */
+    footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted)}
+    .foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+    .foot .left{display:flex;align-items:center;gap:10px}
+    .backtop{margin-left:auto;border:1px solid var(--line);background:var(--panel);padding:8px 12px;border-radius:12px;cursor:pointer;color:var(--text)}
 
-    @media (max-width:640px){
-      .hero h1{font-size:26px}
-      .qr{width:150px;height:150px}
-      .dock{left:16px;right:16px;justify-content:center}
-    }
+    /* 辅助：焦点可视、动画开关 */
+    :focus-visible{outline:2px solid color-mix(in oklab, var(--brand) 70%, transparent);outline-offset:2px;border-radius:8px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
   </style>
 </head>
 <body>
-  <header class="nav" id="top">
-    <div class="wrap">
-      <a href="#top" class="brand" aria-label="返回顶部"><img src="https://i.postimg.cc/4yY1ShLp/photo-2025-08-20-15-38-15.jpg" alt="logo"><span>中国华夏联盟</span></a>
+  <!-- 顶部导航 -->
+  <header class="nav" id="top" role="banner">
+    <div class="container nav-inner">
+      <a href="#top" class="brand" aria-label="返回顶部">
+        <img src="https://i.postimg.cc/4yY1ShLp/photo-2025-08-20-15-38-15.jpg" alt="Logo" />
+        <span>中国华夏联盟</span>
+      </a>
       <nav class="menu" aria-label="主菜单">
-        <a href="#download">APP下载</a>
+        <a href="#download">APP 下载</a>
         <a href="#about">关于我们</a>
         <a href="#strength">实力</a>
         <a href="#culture">文化</a>
       </nav>
-      <button class="toggle" id="themeToggle" aria-label="切换主题">☾/☼</button>
+      <button class="toggle" id="themeToggle" aria-label="切换主题">☾ / ☼</button>
     </div>
   </header>
 
+  <!-- 英雄区 -->
   <section class="hero" id="download">
-    <h1>中国华夏联盟 APP：HuaXia</h1>
-    <p>传承 · 创新 · 共赢 —— 官方指定移动端平台</p>
+    <div class="container">
+      <div class="hero-card">
+        <span class="eyebrow">官方指定移动端平台 · 安全下载</span>
+        <h1>中国华夏联盟 APP：HuaXia</h1>
+        <p class="sub">传承 · 创新 · 共赢 — 简洁高端的移动端门户，支持 iOS 与 Android。</p>
 
-    <!-- 下载入口（优化版） -->
-    <div class="download" role="group" aria-label="下载入口">
-      <div class="cta">
-        <a class="store ios" href="https://xt.fxoco08636efff.top/s/Jg1x" target="_blank" rel="noopener" aria-label="前往 App Store 下载 iOS 版本">
-          <img loading="lazy" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store 下载">
-        </a>
-        <a class="store android" href="https://d2ttnklxhosz2n.cloudfront.net/kh5000/fxt114.apk" target="_blank" rel="noopener" aria-label="下载 Android 安装包 APK">
-          <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Android 下载">
-        </a>
-      </div>
-      <p class="cta-note" aria-live="polite">
-        <span class="tag ios">iOS</span>
-        <span>苹果用户下载</span>
-        <span class="sep">·</span>
-        <span class="tag android">Android</span>
-        <span>安卓用户下载</span>
-      </p>
-    </div>
-
-    <div class="qr-section">
-      <div class="qr-box" tabindex="0" aria-label="iOS 下载二维码">
-        <img class="qr" loading="lazy" src="https://i.postimg.cc/m274DbsB/image.png" alt="iOS 下载二维码">
-        <div class="qr-label">
-          <img loading="lazy" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store 扫码">
+        <!-- 下载入口 -->
+        <div class="cta" role="group" aria-label="下载入口">
+          <a class="store ios" href="https://xt.fxoco08636efff.top/s/Jg1x" target="_blank" rel="noopener" aria-label="前往 App Store 下载 iOS 版本">
+            <img loading="lazy" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store 下载">
+          </a>
+          <a class="store android" href="https://d2ttnklxhosz2n.cloudfront.net/kh5000/fxt114.apk" target="_blank" rel="noopener" aria-label="下载 Android 安装包 APK">
+            <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Android 下载">
+          </a>
         </div>
-      </div>
-      <div class="qr-box" tabindex="0" aria-label="Android 下载二维码">
-        <img class="qr" loading="lazy" src="https://i.postimg.cc/T1HNTNdY/image.png" alt="Android 下载二维码">
-        <div class="qr-label">
-          <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play 扫码">
+        <p class="cta-note" aria-live="polite">
+          <span class="tag">iOS / 苹果用户</span>
+          <span>·</span>
+          <span class="tag">Android / 安卓用户</span>
+        </p>
+
+        <!-- 二维码 -->
+        <div class="qr-wrap" aria-label="二维码下载">
+          <div class="qr-card" tabindex="0" aria-label="iOS 下载二维码">
+            <img class="qr" loading="lazy" src="https://i.postimg.cc/m274DbsB/image.png" alt="iOS 下载二维码">
+            <div class="qr-lab"><img loading="lazy" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store 扫码"></div>
+          </div>
+          <div class="qr-card" tabindex="0" aria-label="Android 下载二维码">
+            <img class="qr" loading="lazy" src="https://i.postimg.cc/T1HNTNdY/image.png" alt="Android 下载二维码">
+            <div class="qr-lab"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play 扫码"></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- 关于 -->
   <section id="about">
-    <div class="wrap">
-      <h2 class="section-title">关于中国华夏联盟</h2>
-      <p class="section-desc">中国华夏联盟以华夏同学会为核心发起，整合产业、学术与公益资源，致力于推动社会价值与商业共融发展。</p>
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">关于中国华夏联盟</h2>
+        <p class="section-desc">由华夏同学会发起，整合产业、学术与公益资源，推动社会价值与商业共融发展。</p>
+      </div>
       <div class="grid-3">
         <div class="card"><h3>起源 / 背景</h3><p>由华夏同学会延展，凝聚企业家与社会贤达。</p></div>
         <div class="card"><h3>使命 / 定位</h3><p>整合资源、推动创新、兼顾公益，在产业与社会之间架起桥梁。</p></div>
@@ -212,10 +209,13 @@
     </div>
   </section>
 
+  <!-- 实力 -->
   <section id="strength">
-    <div class="wrap">
-      <h2 class="section-title">规模与实力</h2>
-      <p class="section-desc">以长期主义为底色，稳健发展、科技赋能，持续创造社会与商业价值。</p>
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">规模与实力</h2>
+        <p class="section-desc">以长期主义为底色，稳健发展、科技赋能，持续创造社会与商业价值。</p>
+      </div>
       <div class="stats">
         <div class="stat"><div class="num" data-count="20">0+</div><div class="lab">年行业经验</div></div>
         <div class="stat"><div class="num" data-count="100000">0+</div><div class="lab">联盟成员</div></div>
@@ -224,9 +224,12 @@
     </div>
   </section>
 
+  <!-- 文化 -->
   <section id="culture">
-    <div class="wrap">
-      <h2 class="section-title">联盟文化</h2>
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">联盟文化</h2>
+      </div>
       <div class="card" style="text-align:center">
         <p>使命：传承华夏精神 · 促进创新发展 · 共创社会价值</p>
         <p>愿景：汇聚精英 · 连接世界 · 成为具有广泛影响力的平台</p>
@@ -236,28 +239,28 @@
     </div>
   </section>
 
+  <!-- 页脚 -->
   <footer id="contact" aria-label="页脚">
-    <div class="wrap">
-      <div class="foot-left">
+    <div class="container foot">
+      <div class="left">
         <img src="https://i.postimg.cc/4yY1ShLp/photo-2025-08-20-15-38-15.jpg" alt="logo" width="22" height="22"/>
-        <small>中国华夏联盟</small>
+        <small>© 中国华夏联盟</small>
       </div>
       <button class="backtop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button>
     </div>
   </footer>
 
+  <!-- 快速操作浮窗 -->
   <div class="dock" aria-label="快速下载">
     <a href="#download" aria-label="前往下载区">📲 下载</a>
     <a href="#about" aria-label="查看关于">🏛 关于</a>
   </div>
 
   <script>
-    const nav = document.querySelector('.nav');
+    /* ====== 交互：导航激活、数字动画、主题切换 ====== */
     const links = document.querySelectorAll('.menu a');
     const sections = [...document.querySelectorAll('section[id]')];
-
     const onScroll = () => {
-      nav.classList.toggle('scrolled', window.scrollY > 6);
       const y = window.scrollY + 100;
       let active = null;
       for(const s of sections){
@@ -268,9 +271,9 @@
     document.addEventListener('scroll', onScroll, {passive:true});
     onScroll();
 
-    // 数字动画
+    // 数字动画（仅一次）
     const counters = document.querySelectorAll('.num');
-    const observer = new IntersectionObserver((entries)=>{
+    const io = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
           const el = entry.target; const target = +el.dataset.count;
@@ -283,17 +286,32 @@
             if(p < 1) requestAnimationFrame(step);
           };
           requestAnimationFrame(step);
-          observer.unobserve(el);
+          io.unobserve(el);
         }
       });
     }, {threshold: .6});
-    counters.forEach(el=>observer.observe(el));
+    counters.forEach(el=>io.observe(el));
 
-    // 主题切换
+    // 主题切换（持久化）
     const toggle = document.getElementById('themeToggle');
     const applyTheme = (m)=>{
-      if(m==='dark') document.documentElement.style.colorScheme = 'dark';
-      else document.documentElement.style.colorScheme = 'light';
+      if(m==='light'){
+        document.documentElement.style.colorScheme = 'light';
+        document.body.style.setProperty('--bg', '#F7F7FA');
+        document.body.style.setProperty('--panel', '#FFFFFF');
+        document.body.style.setProperty('--elev', '#FFFFFF');
+        document.body.style.setProperty('--text', '#0F172A');
+        document.body.style.setProperty('--muted', '#475569');
+        document.body.style.setProperty('--line', '#E6E8EF');
+      }else{
+        document.documentElement.style.colorScheme = 'dark';
+        document.body.style.removeProperty('--bg');
+        document.body.style.removeProperty('--panel');
+        document.body.style.removeProperty('--elev');
+        document.body.style.removeProperty('--text');
+        document.body.style.removeProperty('--muted');
+        document.body.style.removeProperty('--line');
+      }
     };
     let mode = localStorage.getItem('hx-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     applyTheme(mode);
@@ -303,6 +321,7 @@
       applyTheme(mode);
     });
 
+    // 键盘可见焦点
     document.body.addEventListener('keydown', (e)=>{
       if(e.key==='Tab') document.body.classList.add('show-focus');
     }, {once:true});
